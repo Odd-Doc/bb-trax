@@ -7,16 +7,16 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 
-interface FacilityProps {
-  company: String;
-  address: String;
-  city?: String;
-  state?: String;
-  zip?: Number;
-  devices: Array<string>;
-}
+// interface FacilityProps {
+//   company: String;
+//   address: String;
+//   city?: String;
+//   state?: String;
+//   zip?: Number;
+//   devices: Array<string>;
+// }
 
-function Facility({ address, company, devices }: FacilityProps) {
+function Facility({ address, company, devices }) {
   const [status, setStatus] = useState();
   return (
     <>
@@ -55,16 +55,16 @@ function Facility({ address, company, devices }: FacilityProps) {
       >
         <Text style={styles.viewDevicesText}>View Devices</Text>
       </TouchableOpacity> */}
-      {/* <View style={styles.devicesContainer}>
+      <View style={styles.devicesContainer}>
         {devices.length > 0 && (
           <FlatList
             data={devices}
             renderItem={({ item, index }) => (
-              <TouchableOpacity style={styles.device}></TouchableOpacity>
+              <Text style={styles.device}>{item.serialNumber}</Text>
             )}
           />
         )}
-      </View> */}
+      </View>
     </>
   );
 }
