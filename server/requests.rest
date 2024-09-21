@@ -1,0 +1,92 @@
+GET http://localhost:3001/facilities
+
+
+### add facility
+POST http://localhost:3001/facility/new
+Content-Type: application/json
+
+{
+    "name":"Walter's Mart",
+    "street": "3232 Some St.",
+    "city": "Some city",
+    "state": "Some state",
+    "zip": 75050,
+    "locationId":929292
+}
+### find facility
+GET  http://localhost:3001/facility/66e9b594fbc96d49253b4bd1
+
+###
+### query through facilities
+GET  http://localhost:3001/facility/search?query=E
+
+###
+### delete facility
+DELETE  http://localhost:3001/facility/delete/66e9b594fbc96d49253b4bd1
+
+###
+
+### delete ALLLLLLLLLL facility
+DELETE  http://localhost:3001/facility/delete
+
+###
+
+### update facility
+PUT http://localhost:3001/facility/update/66c4e209d0200d27fff68fd1/66e3206f04e97c334f4a5eb5
+Content-Type: application/json
+
+{  
+     "manufacturer": "Febco",
+    "model": "850",
+    "size": "1",
+    "type": "Double Check",
+    "serialNumber": "longserial#######",
+    "locationDescription": "next to wm",
+    "location": {
+     "type":"Point"
+    ,
+    "coordinates":[22.2,34.2]
+    }
+   
+}
+
+###
+### add new device
+POST http://localhost:3001/device/new
+Content-Type: application/json
+
+{  
+     "manufacturer": "Febco",
+    "model": "850",
+    "size": "1",
+    "type": "Double Check",
+    "serialNumber": "longserial#######",
+    "locationDescription": "next to wm",
+    "location": {
+     "type":"Point"
+    ,
+    "coordinates":[22.2,34.2]
+    }
+   
+}
+###
+### add imported facility
+POST http://localhost:3001/facility/newImport
+Content-Type: application/json
+
+{  
+    "name": "test",
+    "testdue": "12/15/2025"
+ 
+   
+}
+###
+### find device
+GET  http://localhost:3001/device/66e321117c7ef0c725609715
+
+###
+
+### delete device
+DELETE  http://localhost:3001/device/delete/66e3204097c2a2d8bbb2298b
+
+###
