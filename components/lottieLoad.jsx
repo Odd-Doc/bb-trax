@@ -4,11 +4,10 @@ import waterloader from "../assets/waterloader.json";
 import LottieView from "lottie-react-native";
 const LottieLoader = () => {
   return (
-    <View>
+    <View style={[StyleSheet.absoluteFillObject, styles.container]}>
       <LottieView
         source={waterloader}
-        // style={{ width: "100%", height: "100%" }}
-        style={{ height: 100 }}
+        style={{ height: 100, width: 100 }}
         autoPlay
         loop
       />
@@ -18,4 +17,11 @@ const LottieLoader = () => {
 
 export default LottieLoader;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1,
+    backgroundColor: "#00000099",
+  },
+});

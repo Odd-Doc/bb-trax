@@ -46,7 +46,6 @@ export default function Search() {
   }, [searchText]);
   useEffect(() => {
     // console.log(`useEffect -> isLoading = ${isLoading}`);
-    console.log(itemId);
   }, [isLoading]);
   const GetFacilities = async (input) => {
     const res = await axios
@@ -71,28 +70,72 @@ export default function Search() {
       }, 2000);
     });
   }
-
-  const handleFacilitySelect = async (facilityId) => {
+  const GetFacilityById = async (facilityId) => {
     setIsLoading(true);
 
-    // console.log(`calling -> isLoading = ${isLoading}`);
-    await resolveAfter2Seconds();
+    const res = await axios
+      .get(API_BASE + "/facility/" + facilityId)
+      .then((foundData) => {
+        setIsLoading(false);
+        router.push({
+          pathname: "/search/facilityScreen",
+          params: {
+            id: foundData.data._id,
+          },
+        });
+      })
+      .catch((err) => console.error("Error: ", err));
+  };
 
-    router.push({
-      pathname: "/search/facilityScreen",
-      params: {
-        id: facilityId,
-      },
-    });
+  const handleFacilitySelect = async (facilityId) => {
+    // setIsLoading(true);
+    // console.log(`calling -> isLoading = ${isLoading}`);
+    // await resolveAfter2Seconds();
+    // router.push({
+    //   pathname: "/search/facilityScreen",
+    //   params: {
+    //     id: facilityId,
+    //   },
+    // });
   };
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
       <SafeAreaView>
         {isLoading ? (
-          <View style={styles.loaderContainer}>
+          <>
+            <View style={styles.container}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter search value"
+                value={searchText}
+                onChangeText={(text) => handleChangeText(text)}
+              />
+              {/* check if search text is empty, if so, do not render Flatlist */}
+              {searchResults.length > 0 && (
+                <FlatList
+                  data={searchResults}
+                  contentContainerStyle={{ gap: 10 }}
+                  renderItem={({ item, index }) => (
+                    <>
+                      <TouchableOpacity
+                        // onPressOut={() => {
+
+                        // }}
+                        onPressOut={() => GetFacilityById(item._id)}
+                      >
+                        <FacilityListItem
+                          company={item.company}
+                          address={item.address}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  )}
+                />
+              )}
+            </View>
             <LottieLoader />
-          </View>
+          </>
         ) : (
           <View style={styles.container}>
             <TextInput
@@ -112,7 +155,7 @@ export default function Search() {
                       // onPressOut={() => {
 
                       // }}
-                      onPressOut={() => handleFacilitySelect(item._id)}
+                      onPressOut={() => GetFacilityById(item._id)}
                     >
                       <FacilityListItem
                         company={item.company}
@@ -154,8 +197,5 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "white",
   },
-  loaderContainer: {
-    height: "100%",
-    justifyContent: "center",
-  },
+  loaderContainer: {},
 });
