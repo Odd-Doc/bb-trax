@@ -37,13 +37,6 @@ function Facility({ address, company, devices }) {
               </View>
             </View>
           </View>
-
-          {/* <TouchableOpacity
-        // style={[styles.viewDevicesButton, { transform: [{ translateY: -10 }] }]}
-        style={styles.viewDevicesButton}
-      >
-        <Text style={styles.viewDevicesText}>View Devices</Text>
-      </TouchableOpacity> */}
           <View style={styles.devicesContainer}>
             {devices.length > 0 && (
               <FlatList
