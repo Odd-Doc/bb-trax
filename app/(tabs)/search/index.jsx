@@ -21,6 +21,10 @@ import Loading from "../../../components/loading";
 import { useEffect, useState } from "react";
 import axios from "axios";
 // import index from "../../index.web";
+import {
+  FacilityProvider,
+  useFacilityContext,
+} from "../../../context/FacilityContext";
 import FacilityListItem from "../../../components/facilityListItem";
 import LottieLoader from "../../../components/lottieLoad";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
@@ -28,25 +32,21 @@ const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 // const API_BASE = "http://localhost:3001";
 
 export default function Search() {
+  const { state, dispatch } = useFacilityContext();
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [itemId, setItemId] = useState("");
-  // const [selectedFacility, setSelectedFacility] = useState();
+  const [facilityId, setFacilityId] = useState("");
 
   const router = useRouter();
+
   useEffect(() => {
     if (searchText == "") {
       setSearchResults("");
     } else {
       GetFacilities(searchText);
-
-      // console.log(`searchResults = ${searchResults}`);
     }
   }, [searchText]);
-  useEffect(() => {
-    // console.log(`useEffect -> isLoading = ${isLoading}`);
-  }, [isLoading]);
   const GetFacilities = async (input) => {
     const res = await axios
       .get(API_BASE + "/facility/search?query=" + input)
@@ -56,27 +56,16 @@ export default function Search() {
       .catch((err) => console.error("Error: ", err));
   };
   const handleChangeText = (text) => {
-    // if (text != "") {
-    //   GetFacilities(text);
-    // } else {
-    //   setSearchText("");
-    // }
     setSearchText(text);
   };
-  function resolveAfter2Seconds() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(setIsLoading(false));
-      }, 2000);
-    });
-  }
   const GetFacilityById = async (facilityId) => {
     setIsLoading(true);
-
     const res = await axios
       .get(API_BASE + "/facility/" + facilityId)
       .then((foundData) => {
         setIsLoading(false);
+        dispatch({ type: "ADD_FACILITY", payload: foundData.data });
+        setFacilityId(foundData.data._id);
         router.push({
           pathname: "/search/facilityScreen",
           params: {
@@ -87,17 +76,6 @@ export default function Search() {
       .catch((err) => console.error("Error: ", err));
   };
 
-  const handleFacilitySelect = async (facilityId) => {
-    // setIsLoading(true);
-    // console.log(`calling -> isLoading = ${isLoading}`);
-    // await resolveAfter2Seconds();
-    // router.push({
-    //   pathname: "/search/facilityScreen",
-    //   params: {
-    //     id: facilityId,
-    //   },
-    // });
-  };
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
@@ -127,6 +105,7 @@ export default function Search() {
                         <FacilityListItem
                           company={item.company}
                           address={item.address}
+                          id={item._id}
                         />
                       </TouchableOpacity>
                     </>

@@ -1,18 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import { RouteParams, Router, Stack, useLocalSearchParams } from "expo-router";
+import {
+  RouteParams,
+  useRouter,
+  Stack,
+  useLocalSearchParams,
+} from "expo-router";
 import axios from "axios";
 import Facility from "../../../components/facility";
+import { useFacilityContext } from "../../../context/FacilityContext";
 // const API_BASE = "http://localhost:3001";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
-
-// interface FacilityProps {
-//   facilityName: String;
-//   facilityStreet: String;
-//   city?: String;
-//   state?: String;
-//   zip?: Number;
-// }
 
 function FacilityScreen() {
   const [companyName, setCompanyName] = useState();
@@ -20,67 +18,77 @@ function FacilityScreen() {
   const [companyZip, setCompanyZip] = useState("");
   const [companyTestDue, setCompanyTestDue] = useState("");
   const [companyDevices, setCompanyDevices] = useState([]);
-
-  // const [companyCity, setCompanyCity] = useState();
-  // const [companyState, setCompanyState] = useState();
-  const companyCity = "Grand Prairie";
-  const companyState = "Texas";
+  const [isLoading, setIsLoading] = useState(false);
+  const { state, dispatch } = useFacilityContext();
 
   const params = useLocalSearchParams();
   const { id } = params;
-  const abortControllerRef = useRef();
 
-  useEffect(() => {
-    fetchFacility();
-  }, []);
-  const fetchFacility = async () => {
-    abortControllerRef.current?.abort();
-    abortControllerRef.current = new AbortController();
-    try {
-      const facility = await axios
-        .get(API_BASE + "/facility/" + id, {
-          signal: abortControllerRef.current?.signal,
-        })
-        .then((res) => {
-          setCompanyName(res.data.company);
-          setCompanyAddress(res.data.address);
-          setCompanyZip(res.data.zip);
-          setCompanyTestDue(
-            new Date(
-              new Date(res.data.testdue).getTime() +
-                new Date(res.data.testdue).getTimezoneOffset() * 60000
-            ).toLocaleDateString()
-          );
-          setCompanyDevices(res.data.devices);
-        });
+  const router = useRouter();
 
-      // console.log(facility.data);
-    } catch {
-      (e) => console.error(e);
-    }
+  const handleShowDevices = async (facilityId) => {
+    // setIsLoading(true);
+    // const found = await fetchFacility(id).then((res) => {
+    //   setIsLoading(false);
+    //   router.push({
+    //     pathname: "/search/deviceListScreen",
+    //     params: {
+    //       id: facilityId,
+    //     },
+    //   });
+    // });
+    router.push({
+      pathname: "/search/deviceListScreen",
+      params: {
+        id: facilityId,
+      },
+    });
   };
+
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Facility" }} />
-
-      <View style={styles.container}>
-        {/* <Text>{companyName}</Text>
-        <Text>{companyAddress}</Text>
-        <Text>{companyCity}</Text>
-        <Text>{companyState}</Text>
-        <Text>{companyZip}</Text>
-        <Text>{companyTestDue}</Text>
-        <Text>{companyDevices.length}</Text>
-        {companyDevices.map((e, i) => {
-          <Text>{e.}</Text>
-        })} */}
-
-        <Facility
-          company={companyName}
-          address={companyAddress}
-          devices={companyDevices}
-        />
-      </View>
+      {isLoading ? (
+        <>
+          <View style={styles.container}>
+            <Facility
+              company={state.company}
+              address={companyAddress}
+              devices={companyDevices}
+              id={id}
+            />
+            <TouchableOpacity onPress={() => handleShowDevices(id)}>
+              <Text
+                style={{
+                  backgroundColor: "#15150c",
+                  fontSize: 20,
+                  color: "white",
+                  textAlign: "center",
+                }}
+              >
+                DEVICES
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <LottieLoader />
+        </>
+      ) : (
+        <View style={styles.container}>
+          <Facility address={state.address} devices={state.company} id={id} />
+          <TouchableOpacity onPress={() => handleShowDevices(id)}>
+            <Text
+              style={{
+                backgroundColor: "#15150c",
+                fontSize: 20,
+                color: "white",
+                textAlign: "center",
+              }}
+            >
+              DEVICES
+            </Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </>
   );
 }

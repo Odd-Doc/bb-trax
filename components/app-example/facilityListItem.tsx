@@ -1,13 +1,12 @@
 import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect } from "react";
+import React from "react";
 
 interface PropTypes {
   company: String;
   address: String;
-  id: String;
 }
 
-const FacilityListItem = ({ company, address, id }: PropTypes) => {
+const FacilityListItem = ({ company, address }: PropTypes) => {
   return (
     <View style={styles.container}>
       <Text style={styles.boldText}>{company}</Text>

@@ -5,9 +5,11 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-
+import { router } from "expo-router";
+import axios from "axios";
+import { useFacilityContext } from "../context/FacilityContext";
 // interface FacilityProps {
 //   company: String;
 //   address: String;
@@ -17,16 +19,23 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 //   devices: Array<string>;
 // }
 
-function Facility({ address, company, devices }) {
-  const [status, setStatus] = useState();
+function Facility({ address, company, id }) {
+  const [facilityId, setFacilityId] = useState();
+  const [isLoading, setIsLoading] = useState(false);
+  const { state, dispatch } = useFacilityContext();
+
+  useEffect(() => {
+    setFacilityId(id);
+  }, []);
+
   return (
     <>
       <SafeAreaProvider>
         <View style={{ flex: 1 }}>
           <View style={styles.infoContainer}>
             <View style={styles.headerContainer}>
-              <Text style={styles.companyText}>{company}</Text>
-              <Text style={styles.addressText}>{address}</Text>
+              <Text style={styles.companyText}>{state.company}</Text>
+              <Text style={styles.addressText}>{state.address}</Text>
               <View style={styles.statusContainer}>
                 <View style={styles.goodStatus}>
                   {/* <Text style={styles.statusText}>Complete</Text> */}
@@ -36,22 +45,6 @@ function Facility({ address, company, devices }) {
                 </View>
               </View>
             </View>
-          </View>
-          <View style={styles.devicesContainer}>
-            {devices.length > 0 && (
-              <FlatList
-                data={devices}
-                contentContainerStyle={{ margin: 4 }}
-                horizontal={false}
-                style={{}}
-                renderItem={({ item, index }) => (
-                  <View style={styles.device}>
-                    <Text>{item.serialNumber}</Text>
-                    <Text>{item.serialNumber}</Text>
-                  </View>
-                )}
-              />
-            )}
           </View>
         </View>
       </SafeAreaProvider>
@@ -82,10 +75,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     padding: 10,
   },
+
   headerContainer: {
     backgroundColor: "white",
     paddingTop: 30,
   },
+
   companyText: {
     fontFamily: "Roboto_400Regular",
     fontSize: 30,
@@ -105,8 +100,6 @@ const styles = StyleSheet.create({
   viewDevicesText: {
     color: "white",
   },
-  device: {},
-  deviceText: {},
 });
 
 export default Facility;

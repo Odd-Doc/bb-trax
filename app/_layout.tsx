@@ -1,9 +1,11 @@
-import { Stack } from "expo-router";
+import { Slot, Stack } from "expo-router";
+import { FacilityProvider } from "../context/FacilityContext";
 
 export default function RootLayout() {
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-    </Stack>
+    <>
+      {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
+      <Slot />
+    </>
   );
 }

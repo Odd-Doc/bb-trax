@@ -26,49 +26,38 @@ const HomeIndex = () => {
 
   return (
     <>
-      {isLoading == true ? (
-        <>
-          <Stack.Screen
-            options={{
-              title: "Shmokay",
-            }}
-          />
-          {/* <LoadingScreen /> */}
-        </>
-      ) : (
-        <>
-          <Stack.Screen
-            options={{
-              title: "Shmokay",
-            }}
-          />
+      <>
+        <Stack.Screen
+          options={{
+            title: "Shmokay",
+          }}
+        />
 
-          <View style={styles.container}>
-            {/*
+        <View style={styles.container}>
+          {/*
             ////////////////////////////////////////////////////////////////////////////
              button used to format source data into more usable state for mongo models 
             ////////////////////////////////////////////////////////////////////////////
              */}
-            {/* <TouchableOpacity
+          {/* <TouchableOpacity
               onPress={handleImport}
               style={styles.importButton}
             >
               <Text style={styles.importButtonText}>Import Data</Text>
             </TouchableOpacity> */}
-            <ScrollView>
-              {/* <MapIndex /> */}
-              <View style={styles.linkContainer}>
-                <TouchableOpacity
-                  onPress={() => router.push("/home/map")}
-                  style={styles.button}
-                >
-                  <Text style={styles.buttonText}>Map</Text>
-                </TouchableOpacity>
-              </View>
-            </ScrollView>
-          </View>
-        </>
-      )}
+          <ScrollView>
+            {/* <MapIndex /> */}
+            <View style={styles.linkContainer}>
+              <TouchableOpacity
+                onPress={() => router.push("/home/map")}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Map</Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
+        </View>
+      </>
     </>
   );
 };
