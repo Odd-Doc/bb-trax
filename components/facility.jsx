@@ -30,24 +30,20 @@ function Facility({ address, company, id }) {
 
   return (
     <>
-      <SafeAreaProvider>
-        <View style={{ flex: 1 }}>
-          <View style={styles.infoContainer}>
-            <View style={styles.headerContainer}>
-              <Text style={styles.companyText}>{state.company}</Text>
-              <Text style={styles.addressText}>{state.address}</Text>
-              <View style={styles.statusContainer}>
-                <View style={styles.goodStatus}>
-                  {/* <Text style={styles.statusText}>Complete</Text> */}
-                </View>
-                <View style={styles.badStatus}>
-                  <Text style={styles.statusText}>Incomplete</Text>
-                </View>
-              </View>
+      <View style={styles.infoContainer}>
+        <View style={styles.headerContainer}>
+          <Text style={styles.companyText}>{state.company}</Text>
+          <Text style={styles.addressText}>{state.address}</Text>
+          <View style={styles.statusContainer}>
+            <View style={styles.goodStatus}>
+              {/* <Text style={styles.statusText}>Complete</Text> */}
+            </View>
+            <View style={styles.badStatus}>
+              <Text style={styles.statusText}>Incomplete</Text>
             </View>
           </View>
         </View>
-      </SafeAreaProvider>
+      </View>
     </>
   );
 }

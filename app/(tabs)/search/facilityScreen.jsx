@@ -27,16 +27,6 @@ function FacilityScreen() {
   const router = useRouter();
 
   const handleShowDevices = async (facilityId) => {
-    // setIsLoading(true);
-    // const found = await fetchFacility(id).then((res) => {
-    //   setIsLoading(false);
-    //   router.push({
-    //     pathname: "/search/deviceListScreen",
-    //     params: {
-    //       id: facilityId,
-    //     },
-    //   });
-    // });
     router.push({
       pathname: "/search/deviceListScreen",
       params: {
@@ -47,54 +37,28 @@ function FacilityScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: true, title: "Facility" }} />
-      {isLoading ? (
-        <>
-          <View style={styles.container}>
-            <Facility
-              company={state.company}
-              address={companyAddress}
-              devices={companyDevices}
-              id={id}
-            />
-            <TouchableOpacity onPress={() => handleShowDevices(id)}>
-              <Text
-                style={{
-                  backgroundColor: "#15150c",
-                  fontSize: 20,
-                  color: "white",
-                  textAlign: "center",
-                }}
-              >
-                DEVICES
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <LottieLoader />
-        </>
-      ) : (
-        <View style={styles.container}>
-          <Facility address={state.address} devices={state.company} id={id} />
-          <TouchableOpacity onPress={() => handleShowDevices(id)}>
-            <Text
-              style={{
-                backgroundColor: "#15150c",
-                fontSize: 20,
-                color: "white",
-                textAlign: "center",
-              }}
-            >
-              DEVICES
-            </Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      <View style={styles.container}>
+        <Facility address={state.address} devices={state.company} id={id} />
+        <TouchableOpacity onPress={() => handleShowDevices(id)}>
+          <Text
+            style={{
+              backgroundColor: "#15150c",
+              fontSize: 20,
+              color: "white",
+              textAlign: "center",
+              alignSelf: "center",
+            }}
+          >
+            DEVICES
+          </Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: "blue",
   },
 });
 
