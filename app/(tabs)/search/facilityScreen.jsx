@@ -7,8 +7,9 @@ import {
   useLocalSearchParams,
 } from "expo-router";
 import axios from "axios";
-import Facility from "../../../components/facility";
+import Facility from "../../../components/Facility";
 import { useFacilityContext } from "../../../context/FacilityContext";
+import FacilityStats from "../../../components/FacilityStats";
 // const API_BASE = "http://localhost:3001";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
@@ -39,27 +40,27 @@ function FacilityScreen() {
     <>
       <View style={styles.container}>
         <Facility address={state.address} devices={state.company} id={id} />
-        <TouchableOpacity onPress={() => handleShowDevices(id)}>
-          <Text
-            style={{
-              backgroundColor: "#15150c",
-              fontSize: 20,
-              color: "white",
-              textAlign: "center",
-              alignSelf: "center",
-            }}
-          >
-            DEVICES
-          </Text>
-        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleShowDevices(id)}
+        ></TouchableOpacity>
+        <FacilityStats />
+        <Text
+          style={{
+            backgroundColor: "#15150c",
+            fontSize: 20,
+            color: "white",
+            textAlign: "center",
+            alignSelf: "center",
+          }}
+        >
+          DEVICES
+        </Text>
       </View>
     </>
   );
 }
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "blue",
-  },
+  container: { flex: 1 },
 });
 
 export default FacilityScreen;

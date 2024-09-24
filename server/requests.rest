@@ -14,7 +14,7 @@ Content-Type: application/json
     "locationId":929292
 }
 ### find facility
-GET  http://localhost:3001/facility/66e9b594fbc96d49253b4bd1
+GET  http://localhost:3001/facility/66ec85756579a18247b1199e
 
 ###
 ### query through facilities
@@ -27,7 +27,7 @@ DELETE  http://localhost:3001/facility/delete/66e9b594fbc96d49253b4bd1
 ###
 
 ### delete ALLLLLLLLLL facility
-DELETE  http://localhost:3001/facility/delete
+##DELETE  http://localhost:3001/facility/delete
 
 ###
 

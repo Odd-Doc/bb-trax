@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
-import Map from "../../../components/map";
+import Map from "../../../components/Map";
 import * as Location from "expo-location";
 import { Stack } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";

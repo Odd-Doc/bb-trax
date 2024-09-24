@@ -1,9 +1,9 @@
-import { Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import React, { Children } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
 interface PropTypes {
-  href: string;
+  href: Href;
   children: React.JSX.Element;
 }
 

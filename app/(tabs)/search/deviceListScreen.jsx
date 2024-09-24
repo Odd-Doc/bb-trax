@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useRef, useState } from "react";
-import DeviceList from "../../../components/deviceList";
+import DeviceList from "../../../components/DeviceList";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useFacilityContext } from "../../../context/FacilityContext";
 

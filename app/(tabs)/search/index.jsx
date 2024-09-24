@@ -17,7 +17,7 @@ import {
   FlatList,
   Pressable,
 } from "react-native";
-import Loading from "../../../components/loading";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 // import index from "../../index.web";
@@ -25,8 +25,8 @@ import {
   FacilityProvider,
   useFacilityContext,
 } from "../../../context/FacilityContext";
-import FacilityListItem from "../../../components/facilityListItem";
-import LottieLoader from "../../../components/lottieLoad";
+import FacilityListItem from "../../../components/FacilityListItem";
+import LottieLoader from "../../../components/LottieLoad";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 // const API_BASE = "http://localhost:3001";
@@ -68,9 +68,6 @@ export default function Search() {
         setFacilityId(foundData.data._id);
         router.push({
           pathname: "/search/facilityScreen",
-          params: {
-            id: foundData.data._id,
-          },
         });
       })
       .catch((err) => console.error("Error: ", err));
