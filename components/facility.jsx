@@ -32,16 +32,9 @@ function Facility({ address, company, id }) {
     <>
       <View style={styles.infoContainer}>
         <View style={styles.headerContainer}>
-          <Text style={styles.companyText}>{state.company}</Text>
-          <Text style={styles.addressText}>{state.address}</Text>
-          <View style={styles.statusContainer}>
-            <View style={styles.goodStatus}>
-              {/* <Text style={styles.statusText}>Complete</Text> */}
-            </View>
-            <View style={styles.badStatus}>
-              <Text style={styles.statusText}>Incomplete</Text>
-            </View>
-          </View>
+          <Text style={styles.companyText}>{state.facility.company}</Text>
+          <Text style={styles.addressText}>{state.facility.address}</Text>
+          <View style={styles.statusContainer}></View>
         </View>
       </View>
     </>

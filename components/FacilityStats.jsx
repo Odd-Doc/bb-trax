@@ -7,19 +7,18 @@ import axios from "axios";
 import { useSystemFacilityContext } from "../context/SytemFacilityContext";
 import { useFacilityContext } from "../context/FacilityContext";
 import { PieChart } from "react-native-gifted-charts";
+import useFacilityComplianceGrade from "../hooks/useFacilityComplianceGrade";
 const FacilityStats = () => {
   const { state } = useFacilityContext();
+  const percentGrade = useFacilityComplianceGrade({
+    data: {
+      overdue: state.deviceStats.overDue,
+      current: state.deviceStats.current,
+    },
+  });
 
-  const getPercent = () => {
-    const factor =
-      state.deviceStats.current /
-      (state.deviceStats.overDue + state.deviceStats.current);
-    const percent = factor * 100;
-
-    return parseInt(percent);
-  };
   const getComplianceGrade = () => {
-    if (getPercent() == 100) {
+    if (percentGrade == 100) {
       return "All Caught Up!";
     } else {
       return "Something is Missing!";
@@ -126,7 +125,7 @@ const FacilityStats = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      {getPercent()}%
+                      {percentGrade}%
                     </Text>
                     <Text
                       style={{
