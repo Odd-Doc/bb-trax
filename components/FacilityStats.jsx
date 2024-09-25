@@ -10,6 +10,22 @@ import { PieChart } from "react-native-gifted-charts";
 const FacilityStats = () => {
   const { state } = useFacilityContext();
 
+  const getPercent = () => {
+    const factor =
+      state.deviceStats.current /
+      (state.deviceStats.overDue + state.deviceStats.current);
+    const percent = factor * 100;
+
+    return parseInt(percent);
+  };
+  const getComplianceGrade = () => {
+    if (getPercent() == 100) {
+      return "All Caught Up!";
+    } else {
+      return "Something is Missing!";
+    }
+  };
+
   const pieData = [
     {
       value: state.deviceStats.current,
@@ -110,10 +126,16 @@ const FacilityStats = () => {
                         fontWeight: "bold",
                       }}
                     >
-                      47%
+                      {getPercent()}%
                     </Text>
-                    <Text style={{ fontSize: 14, color: "white" }}>
-                      Excellent
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: "white",
+                        textAlign: "center",
+                      }}
+                    >
+                      {getComplianceGrade()}
                     </Text>
                   </View>
                 );
