@@ -6,9 +6,11 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { colors } from "../../../styles/color-palette";
 import React, { useEffect, useState } from "react";
 // import convertTokayData from "../../../services/convertTokayData";
 import { Stack, useRouter } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 // import rawData from "../../../services/data.json";
 // import LoadingScreen from "../../../(stack)/loadingScreen";
 const HomeIndex = () => {
@@ -26,38 +28,42 @@ const HomeIndex = () => {
 
   return (
     <>
-      <>
-        <Stack.Screen
-          options={{
-            title: "Shmokay",
-          }}
-        />
-
-        <View style={styles.container}>
-          {/*
+      <Stack.Screen
+        options={{
+          title: "Shmokay",
+        }}
+      />
+      {/* <LinearGradient
+        style={styles.container}
+        colors={[colors.cerulean, colors.indigodye]}
+        start={{ x: 0.5, y: 0.25 }}
+      > */}
+      {/*
             ////////////////////////////////////////////////////////////////////////////
              button used to format source data into more usable state for mongo models 
             ////////////////////////////////////////////////////////////////////////////
              */}
-          {/* <TouchableOpacity
+      {/* <TouchableOpacity
               onPress={handleImport}
               style={styles.importButton}
             >
               <Text style={styles.importButtonText}>Import Data</Text>
             </TouchableOpacity> */}
-          <ScrollView>
-            {/* <MapIndex /> */}
-            <View style={styles.linkContainer}>
-              <TouchableOpacity
-                onPress={() => router.push("/home/map")}
-                style={styles.button}
-              >
-                <Text style={styles.buttonText}>Map</Text>
-              </TouchableOpacity>
-            </View>
-          </ScrollView>
-        </View>
-      </>
+      <View style={styles.container}>
+        <ScrollView>
+          {/* <MapIndex /> */}
+          <View style={styles.linkContainer}>
+            <TouchableOpacity
+              onPress={() => router.push("/home/map")}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Map</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
+
+      {/* </LinearGradient> */}
     </>
   );
 };
@@ -66,11 +72,11 @@ export default HomeIndex;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: colors.pennblue,
     flex: 1,
-    backgroundColor: "#555555",
   },
   button: {
-    backgroundColor: "#137bf2",
+    backgroundColor: colors.cerulean,
     borderRadius: 12,
     paddingLeft: 10,
     paddingTop: 30,

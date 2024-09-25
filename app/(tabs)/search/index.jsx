@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-
+import { colors } from "../../../styles/color-palette";
 import { useEffect, useState } from "react";
 import axios from "axios";
 // import index from "../../index.web";
@@ -85,10 +85,10 @@ export default function Search() {
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
-      <SafeAreaView>
-        {isLoading ? (
-          <>
-            <View style={styles.container}>
+      <View style={styles.container}>
+        <SafeAreaView>
+          {isLoading ? (
+            <>
               <TextInput
                 style={styles.input}
                 placeholder="Enter search value"
@@ -118,50 +118,51 @@ export default function Search() {
                   )}
                 />
               )}
-            </View>
-            <LottieLoader />
-          </>
-        ) : (
-          <View style={styles.container}>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter search value"
-              value={searchText}
-              onChangeText={(text) => handleChangeText(text)}
-            />
-            {/* check if search text is empty, if so, do not render Flatlist */}
-            {searchResults.length > 0 && (
-              <FlatList
-                data={searchResults}
-                contentContainerStyle={{ gap: 10 }}
-                renderItem={({ item, index }) => (
-                  <>
-                    <TouchableOpacity
-                      // onPressOut={() => {
 
-                      // }}
-                      onPressOut={() => GetFacilityById(item._id)}
-                    >
-                      <FacilityListItem
-                        company={item.company}
-                        address={item.address}
-                      />
-                    </TouchableOpacity>
-                  </>
-                )}
+              <LottieLoader />
+            </>
+          ) : (
+            <>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter search value"
+                value={searchText}
+                onChangeText={(text) => handleChangeText(text)}
               />
-            )}
-          </View>
-        )}
-      </SafeAreaView>
+              {/* check if search text is empty, if so, do not render Flatlist */}
+              {searchResults.length > 0 && (
+                <FlatList
+                  data={searchResults}
+                  contentContainerStyle={{ gap: 10 }}
+                  renderItem={({ item, index }) => (
+                    <>
+                      <TouchableOpacity
+                        // onPressOut={() => {
+
+                        // }}
+                        onPressOut={() => GetFacilityById(item._id)}
+                      >
+                        <FacilityListItem
+                          company={item.company}
+                          address={item.address}
+                        />
+                      </TouchableOpacity>
+                    </>
+                  )}
+                />
+              )}
+            </>
+          )}
+        </SafeAreaView>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#555555",
-    height: "100%",
+    backgroundColor: colors.pennblue,
+    flex: 1,
   },
   input: {
     marginLeft: 20,
@@ -170,17 +171,8 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     marginTop: 12,
     backgroundColor: "white",
+    borderRadius: 20,
+    fontFamily: "Roboto_400Regular",
+    fontSize: 18,
   },
-  facility: {
-    // backgroundColor: "#2662d2",
-    // padding: 5,
-    // flex: 1,
-    // alignItems: "center",
-    // margin: 6,
-  },
-  facilityText: {
-    fontSize: 15,
-    color: "white",
-  },
-  loaderContainer: {},
 });

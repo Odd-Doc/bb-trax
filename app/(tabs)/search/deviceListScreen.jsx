@@ -7,16 +7,12 @@ import { useFacilityContext } from "../../../context/FacilityContext";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 const DeviceListScreen = () => {
-  const params = useLocalSearchParams();
-  const { id } = params;
-  const abortControllerRef = useRef();
-  const [companyDevices, setCompanyDevices] = useState([]);
-  const { state, dispatch } = useFacilityContext();
+  const { state } = useFacilityContext();
 
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Device List" }} />
-      <DeviceList devices={state.devices} />
+      <DeviceList devices={state.facility.devices} />
     </>
   );
 };

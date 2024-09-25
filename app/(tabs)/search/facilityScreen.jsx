@@ -1,11 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  RouteParams,
-  useRouter,
-  Stack,
-  useLocalSearchParams,
-} from "expo-router";
+import { useRouter, useLocalSearchParams } from "expo-router";
 import axios from "axios";
 import Facility from "../../../components/Facility";
 import { useFacilityContext } from "../../../context/FacilityContext";
@@ -27,40 +22,61 @@ function FacilityScreen() {
 
   const router = useRouter();
 
-  const handleShowDevices = async (facilityId) => {
+  const handleShowDevices = () => {
     router.push({
       pathname: "/search/deviceListScreen",
-      params: {
-        id: facilityId,
-      },
     });
   };
 
   return (
     <>
       <View style={styles.container}>
-        <Facility address={state.address} devices={state.company} id={id} />
-        <TouchableOpacity
-          onPress={() => handleShowDevices(id)}
-        ></TouchableOpacity>
+        <Facility
+          company={state.facility.company}
+          address={state.facility.address}
+          devices={state.facility.devices}
+          id={id}
+        />
         <FacilityStats />
-        <Text
-          style={{
-            backgroundColor: "#15150c",
-            fontSize: 20,
-            color: "white",
-            textAlign: "center",
-            alignSelf: "center",
-          }}
-        >
-          DEVICES
-        </Text>
+
+        <TouchableOpacity style={styles.button} onPress={handleShowDevices}>
+          <Text style={styles.buttonText}>Show Device List</Text>
+        </TouchableOpacity>
       </View>
     </>
   );
 }
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {
+    flex: 1,
+    backgroundColor: "#34448B",
+  },
+  button: {
+    backgroundColor: "#232B5D",
+    fontSize: 20,
+    color: "white",
+    textAlign: "center",
+    alignSelf: "center",
+    padding: 20,
+    borderRadius: 20,
+  },
+  buttonText: {
+    color: "white",
+    fontFamily: "Roboto_400Regular",
+    fontSize: 20,
+    color: "black",
+    textAlign: "center",
+    color: "white",
+  },
 });
-
+// infoContainer: {
+//   backgroundColor: "#34448B",
+// },
+// headerContainer: {
+//   backgroundColor: "#232B5D",
+//   margin: 20,
+//   borderRadius: 20,
+//   paddingTop: 30,
+//   paddingBottom: 30,
+// },
 export default FacilityScreen;

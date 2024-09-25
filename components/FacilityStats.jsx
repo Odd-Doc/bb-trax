@@ -33,7 +33,7 @@ const FacilityStats = () => {
     },
     {
       value: state.deviceStats.overDue,
-      color: "#FFA5BA",
+      color: "#fb3459",
       gradientCenterColor: "#FF7F97",
     },
   ];
@@ -41,7 +41,7 @@ const FacilityStats = () => {
   const renderLegendComponent = () => {
     return (
       <>
-        <View style={{ flexDirection: "column", justifyContent: "center" }}>
+        <View style={styles.legendContainer}>
           <View
             style={{
               flexDirection: "row",
@@ -63,7 +63,7 @@ const FacilityStats = () => {
               justifyContent: "center",
             }}
           >
-            {renderDot("#FF7F97")}
+            {renderDot("#fb3459")}
             <Text style={{ color: "white" }}>{state.deviceStats.overDue}</Text>
           </View>
         </View>
@@ -84,27 +84,15 @@ const FacilityStats = () => {
       />
     );
   };
+
   return (
     <>
-      <View
-        style={{
-          backgroundColor: "#34448B",
-          flex: 1,
-          justifyContent: "center",
-        }}
-      >
-        <View
-          style={{
-            margin: 20,
-            padding: 16,
-            borderRadius: 20,
-            backgroundColor: "#232B5D",
-          }}
-        >
-          <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>
-            State of Facility
-          </Text>
-          <View style={{ padding: 20, alignItems: "center" }}>
+      <View style={styles.container}>
+        <View style={styles.statsContainer}>
+          <View style={styles.header}>
+            <Text style={styles.headerText}>State of Facility</Text>
+          </View>
+          <View style={styles.chartContainer}>
             <PieChart
               data={pieData}
               donut
@@ -153,9 +141,20 @@ export default FacilityStats;
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#34448B",
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5fcff",
   },
+  statsContainer: {
+    backgroundColor: "#232B5D",
+    borderRadius: 20,
+  },
+  header: { paddingLeft: 20, paddingVertical: 20 },
+  headerText: {
+    color: "white",
+    fontSize: 18,
+    fontFamily: "Roboto_500Medium",
+  },
+  chartContainer: { padding: 20, alignItems: "center" },
+  legendContainer: { flexDirection: "column", justifyContent: "center" },
 });

@@ -7,9 +7,10 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import { router, Stack } from "expo-router";
 import axios from "axios";
 import { useFacilityContext } from "../context/FacilityContext";
+
 // interface FacilityProps {
 //   company: String;
 //   address: String;
@@ -30,57 +31,39 @@ function Facility({ address, company, id }) {
 
   return (
     <>
+      <Stack.Screen options={{ title: "Facility" }} />
       <View style={styles.infoContainer}>
         <View style={styles.headerContainer}>
-          <Text style={styles.companyText}>{state.facility.company}</Text>
-          <Text style={styles.addressText}>{state.facility.address}</Text>
-          <View style={styles.statusContainer}></View>
+          <Text style={styles.companyText}>{company}</Text>
+          <Text style={styles.addressText}>{address}</Text>
         </View>
       </View>
     </>
   );
 }
 const styles = StyleSheet.create({
-  infoContainer: {},
-  statusContainer: {
-    marginTop: 20,
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginBottom: 20,
+  infoContainer: {
+    backgroundColor: "#34448B",
   },
-  goodStatus: {
-    backgroundColor: "#00c800",
-    alignSelf: "center",
-    borderRadius: 25,
-  },
-  badStatus: {
-    backgroundColor: "#d73f3f",
-    alignSelf: "center",
-    borderRadius: 25,
-  },
-  statusText: {
-    fontFamily: "Roboto_400Regular",
-    fontSize: 18,
-    textAlign: "center",
-    padding: 10,
-  },
-
   headerContainer: {
-    backgroundColor: "white",
+    backgroundColor: "#232B5D",
+    borderRadius: 20,
     paddingTop: 30,
+    paddingBottom: 30,
   },
 
   companyText: {
-    fontFamily: "Roboto_400Regular",
+    fontFamily: "Roboto_900Black",
     fontSize: 30,
-    color: "black",
     textAlign: "center",
+    color: "white",
   },
   addressText: {
-    fontFamily: "Roboto_300Light",
-    fontSize: 0,
+    fontFamily: "Roboto_400Regular",
+    fontSize: 20,
     color: "black",
     textAlign: "center",
+    color: "white",
   },
   devicesContainer: {
     backgroundColor: "#555555",
