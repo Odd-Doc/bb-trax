@@ -10,27 +10,42 @@ import { PieChart } from "react-native-gifted-charts";
 const FacilityStats = () => {
   const { state } = useFacilityContext();
   const [dueDate, setDueDate] = useState();
-  const [numberOverDue, setNumberOverdue] = useState();
+  const [deviceStatus, setDeviceStatus] = useState();
 
   useEffect(() => {
-    const currentDate = new Date(
-      new Date().getTime() + new Date().getTimezoneOffset() * 60000
-    ).toLocaleDateString();
-    const facilityDueDate = new Date(
-      new Date(state.dueDate).getTime(state.dueDate) +
-        new Date(state.dueDate).getTimezoneOffset() * 60000
-    ).toLocaleDateString();
-    const deviceLateTestDate = new Date(
-      new Date(state.devices[0].lasttest).getTime() +
-        new Date(state.devices[0].lasttest).getTimezoneOffset() * 60000
-    ).toLocaleDateString();
-    console.log(`current date: ${currentDate}`);
-    console.log(`facility due date: ${facilityDueDate}`);
-    console.log(`device last tested: ${deviceLateTestDate}`);
+    //formatted date for readability
+    // const currentDate = new Date(
+    //   new Date().getTime() + new Date().getTimezoneOffset() * 60000
+    // ).toLocaleDateString();
+    // const facilityDueDate = new Date(
+    //   new Date(state.dueDate).getTime(state.dueDate) +
+    //     new Date(state.dueDate).getTimezoneOffset() * 60000
+    // ).toLocaleDateString();
+    // const deviceLasTestDate = new Date(
+    //   new Date(state.devices[0].lasttest).getTime() +
+    //     new Date(state.devices[0].lasttest).getTimezoneOffset() * 60000
+    // ).toLocaleDateString();
+    // console.log(`device due date: ${new Date(state.devices[0].testdue)}`);
+    // console.log(`device last tested: ${new Date(state.devices[0].lasttest)}`);
+    // console.log(
+    //   `is device overdue? -> device last test < facility due date => ${
+    //     new Date(state.devices[0].lasttest) < new Date(state.devices[0].testdue)
+    //   }`
+    // );
+    console.log(state);
   }, []);
+
   const pieData = [
-    { value: 100, color: "#93FCF8", gradientCenterColor: "#3BE9DE" },
-    { value: 3, color: "#FFA5BA", gradientCenterColor: "#FF7F97" },
+    {
+      value: state.deviceStats.current,
+      color: "#93FCF8",
+      gradientCenterColor: "#3BE9DE",
+    },
+    {
+      value: state.deviceStats.overDue,
+      color: "#FFA5BA",
+      gradientCenterColor: "#FF7F97",
+    },
   ];
 
   const renderLegendComponent = () => {
@@ -47,7 +62,7 @@ const FacilityStats = () => {
             }}
           >
             {renderDot("#3BE9DE")}
-            <Text style={{ color: "white" }}>Good: 40%</Text>
+            <Text style={{ color: "white" }}>{state.deviceStats.current}</Text>
           </View>
           <View
             style={{
@@ -59,7 +74,7 @@ const FacilityStats = () => {
             }}
           >
             {renderDot("#FF7F97")}
-            <Text style={{ color: "white" }}>Poor: 3%</Text>
+            <Text style={{ color: "white" }}>{state.deviceStats.overDue}</Text>
           </View>
         </View>
       </>

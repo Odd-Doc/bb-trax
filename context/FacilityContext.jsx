@@ -3,24 +3,35 @@ import React, { createContext, useContext, useReducer } from "react";
 const FacilityContext = createContext();
 
 const initialState = {
-  company: "",
-  address: "",
-  id: "",
-  devices: [],
-  dueDate: "",
+  facility: {
+    company: "",
+    address: "",
+    id: "",
+    devices: [],
+    dueDate: "",
+  },
+  deviceStats: {
+    overDue: "",
+    current: "",
+  },
 };
 
 const facilityReducer = (state, action) => {
   switch (action.type) {
     case "ADD_FACILITY":
       return {
-        company: action.payload.company,
-        address: action.payload.address,
-        id: action.payload._id,
-        devices: action.payload.devices,
-        dueDate: action.payload.testdue,
+        facility: action.payload.facility,
+        deviceStats: {
+          overDue: action.payload.deviceStats.overDue,
+          current: action.payload.deviceStats.current,
+        },
       };
-
+    case "ADD_STATS":
+      return {
+        ...state,
+        currentDevices: action.payload.current,
+        overDueDevices: action.payload.overDue,
+      };
     default:
       return state;
   }

@@ -36,8 +36,7 @@ export default function Search() {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [facilityId, setFacilityId] = useState("");
-
+  const [readyToPush, setReadyToPush] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -47,6 +46,7 @@ export default function Search() {
       GetFacilities(searchText);
     }
   }, [searchText]);
+
   const GetFacilities = async (input) => {
     const res = await axios
       .get(API_BASE + "/facility/search?query=" + input)
@@ -58,21 +58,44 @@ export default function Search() {
   const handleChangeText = (text) => {
     setSearchText(text);
   };
+  //testing "191028" search -> has 1/7 devices overdue
   const GetFacilityById = async (facilityId) => {
     setIsLoading(true);
     const res = await axios
       .get(API_BASE + "/facility/" + facilityId)
       .then((foundData) => {
+        const deviceStats = getDeviceStatus(foundData.data.devices);
+        dispatch({
+          type: "ADD_FACILITY",
+          payload: {
+            facility: foundData.data,
+            deviceStats: deviceStats,
+          },
+        });
         setIsLoading(false);
-        dispatch({ type: "ADD_FACILITY", payload: foundData.data });
-        setFacilityId(foundData.data._id);
         router.push({
           pathname: "/search/facilityScreen",
         });
       })
       .catch((err) => console.error("Error: ", err));
   };
-
+  const getDeviceStatus = (devices) => {
+    var currentDate = new Date().getTime();
+    var overDueCount = 0;
+    devices.map((device, i) => {
+      if (
+        new Date(device.lasttest) < new Date(device.testdue) &&
+        new Date(device.testdue).getTime() < currentDate
+      ) {
+        overDueCount += 1;
+      }
+    });
+    return {
+      overDue: overDueCount,
+      current: devices.length - overDueCount,
+    };
+    //
+  };
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
