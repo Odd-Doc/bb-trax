@@ -9,8 +9,6 @@ import { useFacilityContext } from "../context/FacilityContext";
 import { PieChart } from "react-native-gifted-charts";
 const FacilityStats = () => {
   const { state } = useFacilityContext();
-  const [dueDate, setDueDate] = useState();
-  const [deviceStatus, setDeviceStatus] = useState();
 
   const pieData = [
     {
