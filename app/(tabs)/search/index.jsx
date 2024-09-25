@@ -58,7 +58,6 @@ export default function Search() {
   const handleChangeText = (text) => {
     setSearchText(text);
   };
-  //testing "191028" search -> has 1/7 devices overdue
   const GetFacilityById = async (facilityId) => {
     setIsLoading(true);
     const res = await axios

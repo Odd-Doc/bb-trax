@@ -12,29 +12,6 @@ const FacilityStats = () => {
   const [dueDate, setDueDate] = useState();
   const [deviceStatus, setDeviceStatus] = useState();
 
-  useEffect(() => {
-    //formatted date for readability
-    // const currentDate = new Date(
-    //   new Date().getTime() + new Date().getTimezoneOffset() * 60000
-    // ).toLocaleDateString();
-    // const facilityDueDate = new Date(
-    //   new Date(state.dueDate).getTime(state.dueDate) +
-    //     new Date(state.dueDate).getTimezoneOffset() * 60000
-    // ).toLocaleDateString();
-    // const deviceLasTestDate = new Date(
-    //   new Date(state.devices[0].lasttest).getTime() +
-    //     new Date(state.devices[0].lasttest).getTimezoneOffset() * 60000
-    // ).toLocaleDateString();
-    // console.log(`device due date: ${new Date(state.devices[0].testdue)}`);
-    // console.log(`device last tested: ${new Date(state.devices[0].lasttest)}`);
-    // console.log(
-    //   `is device overdue? -> device last test < facility due date => ${
-    //     new Date(state.devices[0].lasttest) < new Date(state.devices[0].testdue)
-    //   }`
-    // );
-    console.log(state);
-  }, []);
-
   const pieData = [
     {
       value: state.deviceStats.current,
@@ -151,6 +128,7 @@ const FacilityStats = () => {
     </>
   );
 };
+//testing "191028" search -> has 1/7 devices overdue
 
 export default FacilityStats;
 
