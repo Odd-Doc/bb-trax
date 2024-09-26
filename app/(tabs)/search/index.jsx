@@ -85,10 +85,11 @@ export default function Search() {
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
-      <View style={styles.container}>
-        <SafeAreaView>
-          {isLoading ? (
-            <>
+      <SafeAreaView>
+        {isLoading ? (
+          <>
+            <View style={styles.container}>
+              <LottieLoader />
               <TextInput
                 style={styles.input}
                 placeholder="Enter search value"
@@ -118,11 +119,11 @@ export default function Search() {
                   )}
                 />
               )}
-
-              <LottieLoader />
-            </>
-          ) : (
-            <>
+            </View>
+          </>
+        ) : (
+          <>
+            <View style={styles.container}>
               <TextInput
                 style={styles.input}
                 placeholder="Enter search value"
@@ -149,10 +150,10 @@ export default function Search() {
                   )}
                 />
               )}
-            </>
-          )}
-        </SafeAreaView>
-      </View>
+            </View>
+          </>
+        )}
+      </SafeAreaView>
     </>
   );
 }
@@ -160,7 +161,9 @@ export default function Search() {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.aliceblue2,
-    flex: 1,
+    //this container needs to be manually sized
+    //ie. not flexed, for lottie load to cover screen (at least in this context)
+    height: "100%",
   },
   input: {
     marginLeft: 20,
