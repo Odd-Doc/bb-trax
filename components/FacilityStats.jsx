@@ -22,10 +22,8 @@ const FacilityStats = () => {
 
   const getComplianceGrade = () => {
     if (percentGrade == 100) {
-      setComplianceGrade(true);
       return "All Caught Up!";
     } else {
-      setComplianceGrade(false);
       return "Something is Missing!";
     }
   };
@@ -110,7 +108,7 @@ const FacilityStats = () => {
             radius={100}
             innerRadius={80}
             innerCircleColor={colors.offwhite}
-            innerCircleBorderColor={complianceGrade == true ? null : "#f73f6a"}
+            innerCircleBorderColor={percentGrade == 100 ? null : "#f73f6a"}
             centerLabelComponent={() => {
               return (
                 <View
