@@ -10,6 +10,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { router, Stack } from "expo-router";
 import axios from "axios";
 import { useFacilityContext } from "../context/FacilityContext";
+import colors from "../styles/color-palette";
 
 // interface FacilityProps {
 //   company: String;
@@ -43,30 +44,25 @@ function Facility({ address, company, id }) {
 }
 const styles = StyleSheet.create({
   infoContainer: {
-    backgroundColor: "#34448B",
+    // backgroundColor: colors.aliceblue,
   },
   headerContainer: {
-    backgroundColor: "#232B5D",
+    // backgroundColor: colors.aliceblue,
     borderRadius: 20,
-    paddingTop: 30,
-    paddingBottom: 30,
   },
 
   companyText: {
     fontFamily: "Roboto_900Black",
     fontSize: 30,
     textAlign: "center",
-    color: "white",
+    color: "black",
   },
   addressText: {
     fontFamily: "Roboto_400Regular",
     fontSize: 20,
     color: "black",
     textAlign: "center",
-    color: "white",
-  },
-  devicesContainer: {
-    backgroundColor: "#555555",
+    color: "black",
   },
   viewDevicesButton: {},
   viewDevicesText: {

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-import { colors } from "../../../styles/color-palette";
+import colors from "../../../styles/color-palette";
 import { useEffect, useState } from "react";
 import axios from "axios";
 // import index from "../../index.web";
@@ -137,10 +137,8 @@ export default function Search() {
                   renderItem={({ item, index }) => (
                     <>
                       <TouchableOpacity
-                        // onPressOut={() => {
-
-                        // }}
-                        onPressOut={() => GetFacilityById(item._id)}
+                        onPress={() => GetFacilityById(item._id)}
+                        activeOpacity={0.6}
                       >
                         <FacilityListItem
                           company={item.company}
@@ -161,7 +159,7 @@ export default function Search() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.pennblue,
+    backgroundColor: colors.aliceblue2,
     flex: 1,
   },
   input: {
@@ -170,7 +168,7 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 12,
     marginTop: 12,
-    backgroundColor: "white",
+    backgroundColor: colors.offwhite,
     borderRadius: 20,
     fontFamily: "Roboto_400Regular",
     fontSize: 18,

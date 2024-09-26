@@ -8,7 +8,10 @@ import { useSystemFacilityContext } from "../context/SytemFacilityContext";
 import { useFacilityContext } from "../context/FacilityContext";
 import { PieChart } from "react-native-gifted-charts";
 import useFacilityComplianceGrade from "../hooks/useFacilityComplianceGrade";
+import colors from "../styles/color-palette";
+import { LinearGradient } from "expo-linear-gradient";
 const FacilityStats = () => {
+  const [complianceGrade, setComplianceGrade] = useState();
   const { state } = useFacilityContext();
   const percentGrade = useFacilityComplianceGrade({
     data: {
@@ -19,8 +22,10 @@ const FacilityStats = () => {
 
   const getComplianceGrade = () => {
     if (percentGrade == 100) {
+      setComplianceGrade(true);
       return "All Caught Up!";
     } else {
+      setComplianceGrade(false);
       return "Something is Missing!";
     }
   };
@@ -28,12 +33,12 @@ const FacilityStats = () => {
   const pieData = [
     {
       value: state.deviceStats.current,
-      color: "#93FCF8",
-      gradientCenterColor: "#3BE9DE",
+      color: colors.aquamarine,
+      gradientCenterColor: "#2dbee6",
     },
     {
       value: state.deviceStats.overDue,
-      color: "#fb3459",
+      color: "#f73f6a",
       gradientCenterColor: "#FF7F97",
     },
   ];
@@ -51,7 +56,7 @@ const FacilityStats = () => {
               justifyContent: "center",
             }}
           >
-            {renderDot("#3BE9DE")}
+            {renderDot(colors.aquamarine)}
             <Text style={{ color: "white" }}>{state.deviceStats.current}</Text>
           </View>
           <View
@@ -63,7 +68,7 @@ const FacilityStats = () => {
               justifyContent: "center",
             }}
           >
-            {renderDot("#fb3459")}
+            {renderDot("#f73f6a")}
             <Text style={{ color: "white" }}>{state.deviceStats.overDue}</Text>
           </View>
         </View>
@@ -87,51 +92,57 @@ const FacilityStats = () => {
 
   return (
     <>
-      <View style={styles.container}>
-        <View style={styles.statsContainer}>
-          <View style={styles.header}>
-            <Text style={styles.headerText}>State of Facility</Text>
-          </View>
-          <View style={styles.chartContainer}>
-            <PieChart
-              data={pieData}
-              donut
-              showGradient
-              sectionAutoFocus
-              radius={90}
-              innerRadius={60}
-              innerCircleColor={"#232B5D"}
-              centerLabelComponent={() => {
-                return (
-                  <View
-                    style={{ justifyContent: "center", alignItems: "center" }}
-                  >
-                    <Text
-                      style={{
-                        fontSize: 22,
-                        color: "white",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {percentGrade}%
-                    </Text>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        color: "white",
-                        textAlign: "center",
-                      }}
-                    >
-                      {getComplianceGrade()}
-                    </Text>
-                  </View>
-                );
-              }}
-            />
-          </View>
-          {renderLegendComponent()}
+      {/* <View style={styles.statsContainer}> */}
+      <LinearGradient
+        style={styles.statsContainer}
+        colors={[colors.aliceblue2, colors.carolinablue]}
+        start={{ x: 0.2, y: 0.1 }}
+      >
+        <View style={styles.header}>
+          <Text style={styles.headerText}>State of Facility</Text>
         </View>
-      </View>
+        <View style={styles.chartContainer}>
+          <PieChart
+            data={pieData}
+            donut
+            showGradient
+            sectionAutoFocus
+            radius={100}
+            innerRadius={80}
+            innerCircleColor={colors.offwhite}
+            innerCircleBorderColor={complianceGrade == true ? null : "#f73f6a"}
+            centerLabelComponent={() => {
+              return (
+                <View
+                  style={{ justifyContent: "center", alignItems: "center" }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 22,
+                      color: "black",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {percentGrade}%
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: "black",
+                      textAlign: "center",
+                    }}
+                  >
+                    {getComplianceGrade()}
+                  </Text>
+                </View>
+              );
+            }}
+          />
+        </View>
+
+        {renderLegendComponent()}
+        {/* </View> */}
+      </LinearGradient>
     </>
   );
 };
@@ -140,18 +151,14 @@ const FacilityStats = () => {
 export default FacilityStats;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#34448B",
-    flex: 1,
-    justifyContent: "center",
-  },
   statsContainer: {
-    backgroundColor: "#232B5D",
+    marginLeft: 20,
+    marginRight: 20,
     borderRadius: 20,
   },
   header: { paddingLeft: 20, paddingVertical: 20 },
   headerText: {
-    color: "white",
+    color: "black",
     fontSize: 18,
     fontFamily: "Roboto_500Medium",
   },

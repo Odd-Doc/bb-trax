@@ -5,6 +5,8 @@ import axios from "axios";
 import Facility from "../../../components/Facility";
 import { useFacilityContext } from "../../../context/FacilityContext";
 import FacilityStats from "../../../components/FacilityStats";
+import colors from "../../../styles/color-palette";
+import { LinearGradient } from "expo-linear-gradient";
 // const API_BASE = "http://localhost:3001";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
@@ -38,7 +40,6 @@ function FacilityScreen() {
           id={id}
         />
         <FacilityStats />
-
         <TouchableOpacity style={styles.button} onPress={handleShowDevices}>
           <Text style={styles.buttonText}>Show Device List</Text>
         </TouchableOpacity>
@@ -49,7 +50,9 @@ function FacilityScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#34448B",
+    backgroundColor: colors.offwhite,
+    flexDirection: "column",
+    justifyContent: "space-around",
   },
   button: {
     backgroundColor: "#232B5D",
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     alignSelf: "center",
     padding: 20,
-    borderRadius: 20,
+    borderRadius: 18,
   },
   buttonText: {
     color: "white",

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { colors } from "../../../styles/color-palette";
+import colors from "../../../styles/color-palette";
 import React, { useEffect, useState } from "react";
 // import convertTokayData from "../../../services/convertTokayData";
 import { Stack, useRouter } from "expo-router";
@@ -72,11 +72,11 @@ export default HomeIndex;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.pennblue,
+    backgroundColor: colors.aliceblue,
     flex: 1,
   },
   button: {
-    backgroundColor: colors.cerulean,
+    backgroundColor: colors.carolinablue,
     borderRadius: 12,
     paddingLeft: 10,
     paddingTop: 30,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    color: "white",
+    color: "black",
     fontSize: 20,
     fontWeight: "700",
   },
