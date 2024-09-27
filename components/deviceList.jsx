@@ -119,18 +119,6 @@ const DeviceList = ({ devices }) => {
               }}
               renderItem={({ item, index }) => (
                 <>
-                  {/* <View style={styles.device}>
-                <View style={styles.deviceTextContainer}>
-                  <Text style={styles.deviceText}>{item.hazid}</Text>
-                </View>
-                <View style={styles.deviceTextContainer}>
-                  <Text style={styles.deviceText}>{item.serialNumber}</Text>
-                </View>
-                <View style={styles.deviceTextContainer}>
-                  <Text style={styles.deviceText}>{item._model}</Text>
-                </View>
-              </View> */}
-
                   <Device
                     hazid={item.hazid}
                     sn={item.serialNumber}

@@ -55,7 +55,9 @@ const FacilityStats = () => {
             }}
           >
             {renderDot(colors.aquamarine)}
-            <Text style={{ color: "white" }}>{state.deviceStats.current}</Text>
+            <Text style={{ color: "white" }}>
+              {state.deviceStats.current} Devices Tested
+            </Text>
           </View>
           <View
             style={{
@@ -67,7 +69,9 @@ const FacilityStats = () => {
             }}
           >
             {renderDot("#f73f6a")}
-            <Text style={{ color: "white" }}>{state.deviceStats.overDue}</Text>
+            <Text style={{ color: "white" }}>
+              {state.deviceStats.overDue} Test Overdue
+            </Text>
           </View>
         </View>
       </>
