@@ -7,14 +7,14 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import colorPalette from "../styles/color-palette";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { transform } from "typescript";
-import { Stack, Tabs } from "expo-router";
-import { ScreenStackHeaderRightView } from "react-native-screens";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Modal, TextInput, Pressable } from "react-native";
+import { useFacilityContext } from "../context/FacilityContext";
+import Fuse from "fuse.js";
+
 const deviceWidth = Dimensions.get("screen").width;
+
 const Device = ({ hazid, sn, model }) => {
   return (
     <View
@@ -44,23 +44,30 @@ const Device = ({ hazid, sn, model }) => {
 };
 
 const DeviceList = ({ devices }) => {
+  const [modalVisible, setModalVisible] = useState();
+  const [searchText, setSearchText] = useState("");
+  const { state } = useFacilityContext();
+  //FUSE----------------------------------------------------
+  // const options = {
+  //   includeScore: true,
+  //   useExtendedSearch: true,
+  //   keys: ["serialNumber"],
+  // };
+
+  // const fuse = new Fuse(state.facility.devices, options);
+  // fuse.search("'Man 'Old | Artist$");
+  useEffect(() => {}, [searchText]);
+  const handleDeviceSearch = () => {
+    setModalVisible(true);
+  };
+
+  const handleChangeText = (text) => {
+    setSearchText(text);
+  };
   return (
     <>
-      {/* <Tabs.Screen
-        options={{
-          headerRight: () => {
-            <Button
-              onPress={() => alert("This is a button!")}
-              title="Info"
-              color="#fff"
-            />;
-          },
-        }}
-      /> */}
       <TouchableOpacity
-        onPress={() => {
-          console.log("search button pressed");
-        }}
+        onPress={handleDeviceSearch}
         activeOpacity={0.6}
         style={{
           backgroundColor: colorPalette.aliceblue,
@@ -130,6 +137,36 @@ const DeviceList = ({ devices }) => {
           )}
         </View>
       </View>
+
+      {/* <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TouchableOpacity
+              onPress={() => setModalVisible(false)}
+              activeOpacity={0.6}
+              style={{ padding: 10 }}
+            >
+              <Ionicons name="close" size={32} color={"black"} />
+            </TouchableOpacity>
+            <View style={styles.inputConainer}>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter search value"
+                value={searchText}
+                onChangeText={(text) => handleChangeText(text)}
+              />
+            </View>
+          </View>
+        </View>
+      </Modal> */}
     </>
   );
 };
@@ -137,6 +174,42 @@ const DeviceList = ({ devices }) => {
 export default DeviceList;
 
 const styles = StyleSheet.create({
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    marginTop: 22,
+  },
+  inputConainer: {
+    paddingHorizontal: 30,
+    paddingBottom: 20,
+  },
+  input: {
+    backgroundColor: colorPalette.carolinablue,
+    borderRadius: 20,
+    fontFamily: "Roboto_400Regular",
+    fontSize: 18,
+    padding: 10,
+  },
+  modalView: {
+    flexDirection: "column",
+    marginHorizontal: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    shadowColor: "#000",
+    paddingBottom: 20,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center",
+  },
   row: {
     backgroundColor: "#8cbfcd",
     flexDirection: "row",
