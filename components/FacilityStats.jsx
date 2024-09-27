@@ -24,7 +24,7 @@ const FacilityStats = () => {
     if (percentGrade == 100) {
       return "All Caught Up!";
     } else {
-      return "Something is Missing!";
+      return "Overdue!";
     }
   };
 
