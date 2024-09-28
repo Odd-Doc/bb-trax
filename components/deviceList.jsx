@@ -53,11 +53,11 @@ const Device = ({ hazid, sn, model }) => {
 const DeviceList = ({ devices }) => {
   const [searchBarVisible, setSearchBarVisible] = useState();
   const [searchText, setSearchText] = useState("");
-  const [icon, setIcon] = useState("search");
+  // const [icon, setIcon] = useState("search");
   const { state } = useFacilityContext();
   const width = useSharedValue(50);
   const searchBarAnimConfig = {
-    duration: 1000,
+    duration: 500,
     easing: Easing.elastic(0.8),
     reduceMotion: ReduceMotion.System,
   };
@@ -77,11 +77,11 @@ const DeviceList = ({ devices }) => {
 
   const handleDeviceSearch = () => {
     if (width.value >= deviceWidth - width.value) {
-      setIcon("search");
+      // setIcon("search");
       setSearchBarVisible(false);
       width.value -= deviceWidth - 80;
     } else {
-      setIcon("checkmark");
+      // setIcon("checkmark");
       setSearchBarVisible(true);
       width.value += deviceWidth - 80;
     }
@@ -100,7 +100,7 @@ const DeviceList = ({ devices }) => {
           activeOpacity={0.6}
           style={styles.searchButton}
         >
-          <Ionicons name={icon} size={32} color={"black"} />
+          <Ionicons name="search" size={32} color={"black"} />
         </TouchableOpacity>
         <View style={styles.inputConainer}>
           <TextInput
@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     height: 50,
     // transform: [{ translateY: 40 }, { translateX: deviceWidth - 55 }],
     zIndex: 2,
-    backgroundColor: colorPalette.carolinablue,
+    backgroundColor: colorPalette.offwhite,
     borderRadius: 100,
     flexDirection: "row-reverse",
     alignItems: "flex-end",
@@ -237,8 +237,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-
-    backgroundColor: colorPalette.carolinablue,
+    backgroundColor: colorPalette.offwhite,
     fontFamily: "Roboto_400Regular",
     fontSize: 18,
   },
@@ -296,9 +295,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 12,
     backgroundColor: colorPalette.aliceblue2,
-
-    // borderBottomLeftRadius: 5,
-    // borderBottomRightRadius: 5,
     zIndex: 1,
   },
   deviceListHeaderText: {
