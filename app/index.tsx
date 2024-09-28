@@ -32,5 +32,5 @@ export default function Index() {
     Roboto_900Black,
     Roboto_900Black_Italic,
   });
-  return <Redirect href="/(tabs)/home" />;
+  return <Redirect href="/(tabs)/search/deviceListScreen" />;
 }

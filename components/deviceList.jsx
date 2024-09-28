@@ -12,7 +12,14 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { TouchableOpacity, Modal, TextInput, Pressable } from "react-native";
 import { useFacilityContext } from "../context/FacilityContext";
 import Fuse from "fuse.js";
-
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+  Easing,
+  ReduceMotion,
+} from "react-native-reanimated";
 const deviceWidth = Dimensions.get("screen").width;
 
 const Device = ({ hazid, sn, model }) => {
@@ -44,9 +51,19 @@ const Device = ({ hazid, sn, model }) => {
 };
 
 const DeviceList = ({ devices }) => {
-  const [modalVisible, setModalVisible] = useState();
+  const [searchBarVisible, setSearchBarVisible] = useState();
   const [searchText, setSearchText] = useState("");
+  const [icon, setIcon] = useState("search");
   const { state } = useFacilityContext();
+  const width = useSharedValue(50);
+  const searchBarAnimConfig = {
+    duration: 1000,
+    easing: Easing.elastic(0.8),
+    reduceMotion: ReduceMotion.System,
+  };
+  const searchBarAnimation = useAnimatedStyle(() => ({
+    width: withTiming(width.value, searchBarAnimConfig),
+  }));
   //FUSE----------------------------------------------------
   // const options = {
   //   includeScore: true,
@@ -57,8 +74,17 @@ const DeviceList = ({ devices }) => {
   // const fuse = new Fuse(state.facility.devices, options);
   // fuse.search("'Man 'Old | Artist$");
   useEffect(() => {}, [searchText]);
+
   const handleDeviceSearch = () => {
-    setModalVisible(true);
+    if (width.value >= deviceWidth - width.value) {
+      setIcon("search");
+      setSearchBarVisible(false);
+      width.value -= deviceWidth - 80;
+    } else {
+      setIcon("checkmark");
+      setSearchBarVisible(true);
+      width.value += deviceWidth - 80;
+    }
   };
 
   const handleChangeText = (text) => {
@@ -66,29 +92,32 @@ const DeviceList = ({ devices }) => {
   };
   return (
     <>
-      <TouchableOpacity
-        onPress={handleDeviceSearch}
-        activeOpacity={0.6}
-        style={{
-          backgroundColor: colorPalette.aliceblue,
-          width: 50,
-          height: 50,
-          alignItems: "center",
-          justifyContent: "center",
-          borderRadius: 100,
-          position: "absolute",
-          transform: [{ translateY: 40 }, { translateX: deviceWidth - 55 }],
-          shadowOffset: {
-            width: -2,
-            height: 2,
-          },
-          shadowOpacity: 0.6,
-          shadowRadius: 2.5,
-          zIndex: 2,
-        }}
+      <Animated.View
+        style={[styles.animSearchBarContainer, searchBarAnimation]}
       >
-        <Ionicons name="search" size={32} color={"black"} />
-      </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleDeviceSearch}
+          activeOpacity={0.6}
+          style={styles.searchButton}
+        >
+          <Ionicons name={icon} size={32} color={"black"} />
+        </TouchableOpacity>
+        <View style={styles.inputConainer}>
+          <TextInput
+            style={[
+              styles.input,
+              {
+                flex: 1,
+                alignSelf: "center",
+                display: searchBarVisible ? "flex" : "none",
+              },
+            ]}
+            placeholder="Enter search value"
+            value={searchText}
+            onChangeText={(text) => handleChangeText(text)}
+          />
+        </View>
+      </Animated.View>
       <View style={styles.devicesContainer}>
         <View
           style={[
@@ -174,21 +203,44 @@ const DeviceList = ({ devices }) => {
 export default DeviceList;
 
 const styles = StyleSheet.create({
+  animSearchBarContainer: {
+    position: "absolute",
+    right: 10,
+    top: 40,
+    height: 50,
+    // transform: [{ translateY: 40 }, { translateX: deviceWidth - 55 }],
+    zIndex: 2,
+    backgroundColor: colorPalette.carolinablue,
+    borderRadius: 100,
+    flexDirection: "row-reverse",
+    alignItems: "flex-end",
+    paddingRight: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+
+    shadowOffset: {
+      width: -2,
+      height: 2,
+    },
+    shadowOpacity: 0.6,
+    shadowRadius: 2.5,
+  },
+  searchButton: {},
   centeredView: {
     flex: 1,
     justifyContent: "center",
     marginTop: 22,
   },
   inputConainer: {
-    paddingHorizontal: 30,
-    paddingBottom: 20,
+    flex: 1,
+    marginLeft: 20,
   },
   input: {
+    width: "100%",
+
     backgroundColor: colorPalette.carolinablue,
-    borderRadius: 20,
     fontFamily: "Roboto_400Regular",
     fontSize: 18,
-    padding: 10,
   },
   modalView: {
     flexDirection: "column",
