@@ -1,6 +1,4 @@
 import { Redirect, Tabs } from "expo-router";
-import { Stack } from "expo-router/stack";
-import { Drawer } from "expo-router/drawer";
 import {
   Roboto_400Regular,
   Roboto_700Bold,
@@ -32,5 +30,5 @@ export default function Index() {
     Roboto_900Black,
     Roboto_900Black_Italic,
   });
-  return <Redirect href="/(tabs)/search/deviceListScreen" />;
+  return <Redirect href="/(tabs)/home/" />;
 }
