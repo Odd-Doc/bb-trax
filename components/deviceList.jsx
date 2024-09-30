@@ -15,7 +15,6 @@ import Fuse from "fuse.js";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-  withSpring,
   withTiming,
   Easing,
   ReduceMotion,
