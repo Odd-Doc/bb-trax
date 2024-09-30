@@ -6,7 +6,7 @@ import {
   Dimensions,
   Button,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import colorPalette from "../styles/color-palette";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { TouchableOpacity, Modal, TextInput, Pressable } from "react-native";
@@ -21,8 +21,9 @@ import Animated, {
   ReduceMotion,
 } from "react-native-reanimated";
 const deviceWidth = Dimensions.get("screen").width;
+const deviceHeight = Dimensions.get("screen").height;
 
-const Device = ({ hazid, sn, model, searchResults }) => {
+const Device = ({ hazid, sn, model, searchStyle }) => {
   return (
     <View
       style={[
@@ -36,7 +37,10 @@ const Device = ({ hazid, sn, model, searchResults }) => {
           shadowRadius: 2.5,
         },
         {
-          backgroundColor: console.log(searchResults[0]),
+          backgroundColor:
+            searchStyle && searchStyle.item.hazid == hazid
+              ? "red"
+              : colorPalette.offwhite,
         },
       ]}
     >
@@ -56,8 +60,11 @@ const Device = ({ hazid, sn, model, searchResults }) => {
 const DeviceList = ({ devices }) => {
   const [searchBarVisible, setSearchBarVisible] = useState();
   const [searchText, setSearchText] = useState("");
+  const [scrollIndex, setScrollIndex] = useState(10);
   const { state } = useFacilityContext();
+  const listRef = useRef(null);
   const width = useSharedValue(50);
+
   const searchBarAnimConfig = {
     duration: 500,
     easing: Easing.elastic(0.8),
@@ -74,10 +81,15 @@ const DeviceList = ({ devices }) => {
   };
   //----------------------------------------------------------
   const fuse = new Fuse(state.facility.devices, options);
-  const res = fuse.search(searchText);
+  const fuseSearchResults = fuse.search(searchText);
 
   useEffect(() => {
-    // console.log(res[0]);
+    console.log(fuseSearchResults[0]);
+
+    listRef.current?.scrollToIndex({
+      index: scrollIndex,
+      animated: true,
+    });
   }, [searchText]);
 
   const handleDeviceSearch = () => {
@@ -151,20 +163,34 @@ const DeviceList = ({ devices }) => {
         <View style={styles.deviceListContainer}>
           {devices.length > 0 && (
             <FlatList
-              data={devices}
-              contentContainerStyle={{
-                gap: 11,
-                marginLeft: 10,
-                marginRight: 10,
-                marginTop: 10,
+              ref={listRef}
+              keyExtractor={(item) => item.hazid}
+              initialScrollIndex={scrollIndex}
+              onScrollToIndexFailed={(info) => {
+                const wait = new Promise((resolve) => setTimeout(resolve, 500));
+                wait.then(() => {
+                  listRef.current?.scrollToIndex({
+                    index: info.index,
+                    animated: true,
+                  });
+                });
               }}
+              data={devices}
+              contentContainerStyle={[
+                {
+                  gap: 11,
+                  marginLeft: 10,
+                  marginRight: 10,
+                  marginTop: 10,
+                },
+              ]}
               renderItem={({ item, index }) => (
                 <>
                   <Device
                     hazid={item.hazid}
                     sn={item.serialNumber}
                     model={item._model}
-                    searchResults={res}
+                    searchStyle={fuseSearchResults[0]}
                   />
                 </>
               )}
@@ -268,7 +294,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   row: {
-    backgroundColor: "#8cbfcd",
+    backgroundColor: colorPalette.offwhite,
     flexDirection: "row",
     padding: 10,
     borderRadius: 5,
