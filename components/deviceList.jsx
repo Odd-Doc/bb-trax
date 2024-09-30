@@ -38,7 +38,7 @@ const Device = ({ hazid, sn, model, searchStyle }) => {
         {
           backgroundColor:
             searchStyle && searchStyle.item.hazid == hazid
-              ? "red"
+              ? colorPalette.aquamarine
               : colorPalette.offwhite,
         },
       ]}
@@ -83,8 +83,6 @@ const DeviceList = ({ devices }) => {
   const fuseSearchResults = fuse.search(searchText);
 
   useEffect(() => {
-    console.log(fuseSearchResults[0]);
-
     listRef.current?.scrollToIndex({
       index: scrollIndex,
       animated: true,
