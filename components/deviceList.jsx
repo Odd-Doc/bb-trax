@@ -22,7 +22,7 @@ import Animated, {
 } from "react-native-reanimated";
 const deviceWidth = Dimensions.get("screen").width;
 
-const Device = ({ hazid, sn, model }) => {
+const Device = ({ hazid, sn, model, searchResults }) => {
   return (
     <View
       style={[
@@ -34,6 +34,9 @@ const Device = ({ hazid, sn, model }) => {
           },
           shadowOpacity: 0.6,
           shadowRadius: 2.5,
+        },
+        {
+          backgroundColor: console.log(searchResults[0]),
         },
       ]}
     >
@@ -53,7 +56,6 @@ const Device = ({ hazid, sn, model }) => {
 const DeviceList = ({ devices }) => {
   const [searchBarVisible, setSearchBarVisible] = useState();
   const [searchText, setSearchText] = useState("");
-  // const [icon, setIcon] = useState("search");
   const { state } = useFacilityContext();
   const width = useSharedValue(50);
   const searchBarAnimConfig = {
@@ -64,16 +66,19 @@ const DeviceList = ({ devices }) => {
   const searchBarAnimation = useAnimatedStyle(() => ({
     width: withTiming(width.value, searchBarAnimConfig),
   }));
-  //FUSE----------------------------------------------------
-  // const options = {
-  //   includeScore: true,
-  //   useExtendedSearch: true,
-  //   keys: ["serialNumber"],
-  // };
+  // FUSE----------------------------------------------------
+  const options = {
+    includeScore: true,
+    useExtendedSearch: true,
+    keys: ["serialNumber", "hazid"],
+  };
+  //----------------------------------------------------------
+  const fuse = new Fuse(state.facility.devices, options);
+  const res = fuse.search(searchText);
 
-  // const fuse = new Fuse(state.facility.devices, options);
-  // fuse.search("'Man 'Old | Artist$");
-  useEffect(() => {}, [searchText]);
+  useEffect(() => {
+    // console.log(res[0]);
+  }, [searchText]);
 
   const handleDeviceSearch = () => {
     if (width.value >= deviceWidth - width.value) {
@@ -159,6 +164,7 @@ const DeviceList = ({ devices }) => {
                     hazid={item.hazid}
                     sn={item.serialNumber}
                     model={item._model}
+                    searchResults={res}
                   />
                 </>
               )}
