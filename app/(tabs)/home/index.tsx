@@ -6,25 +6,17 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import colors from "../../../styles/color-palette";
+
 import React, { useEffect, useState } from "react";
 // import convertTokayData from "../../../services/convertTokayData";
 import { Stack, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import colorPalette from "../../../styles/color-palette";
 // import rawData from "../../../services/data.json";
-// import LoadingScreen from "../../../(stack)/loadingScreen";
+
 const HomeIndex = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  // useEffect(() => {
-  //   console.log(isLoading);
-  // }, [isLoading]);
-  // const handleImport = async () => {
-  //   setIsLoading(true);
-  //   await convertTokayData(rawData)
-  //     .catch((err) => console.error(err))
-  //     .then(() => setIsLoading(false));
-  // };
 
   return (
     <>
@@ -50,15 +42,32 @@ const HomeIndex = () => {
               <Text style={styles.importButtonText}>Import Data</Text>
             </TouchableOpacity> */}
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flex: 1 }}>
           {/* <MapIndex /> */}
-          <View style={styles.linkContainer}>
+          {/* <View style={styles.linkContainer}>
             <TouchableOpacity
               onPress={() => router.push("/home/map")}
               style={styles.button}
             >
               <Text style={styles.buttonText}>Map</Text>
             </TouchableOpacity>
+          </View> */}
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: colorPalette.aliceblue,
+            }}
+          >
+            <Text
+              style={{
+                fontFamily: "Roboto_500Medium",
+                fontSize: 20,
+              }}
+            >
+              Home Screen
+            </Text>
           </View>
         </ScrollView>
       </View>
@@ -72,11 +81,11 @@ export default HomeIndex;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.aliceblue,
+    backgroundColor: colorPalette.aliceblue,
     flex: 1,
   },
   button: {
-    backgroundColor: colors.carolinablue,
+    backgroundColor: colorPalette.carolinablue,
     borderRadius: 12,
     paddingLeft: 10,
     paddingTop: 30,
