@@ -30,7 +30,7 @@ const HomeIndex = () => {
     <>
       <Stack.Screen
         options={{
-          title: "Shmokay",
+          title: "Home",
         }}
       />
       {/* <LinearGradient
