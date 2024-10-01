@@ -11,9 +11,9 @@ import colors from "../../../styles/color-palette";
 import { useEffect, useState } from "react";
 import axios from "axios";
 // import index from "../../index.web";
+import LottieLoader from "../../../components/lottieLoad";
 import { useFacilityContext } from "../../../context/FacilityContext";
 import FacilityListItem from "../../../components/FacilityListItem";
-import LottieLoader from "../../../components/LottieLoad";
 
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 // const API_BASE = "http://localhost:3001";

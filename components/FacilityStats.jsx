@@ -1,10 +1,5 @@
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useState, useEffect } from "react";
-
-import { Svg } from "react-native-svg";
-import LottieLoader from "../components/LottieLoad";
-import axios from "axios";
-import { useSystemFacilityContext } from "../context/SytemFacilityContext";
 import { useFacilityContext } from "../context/FacilityContext";
 import { PieChart } from "react-native-gifted-charts";
 import useFacilityComplianceGrade from "../hooks/useFacilityComplianceGrade";
