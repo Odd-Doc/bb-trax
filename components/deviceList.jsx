@@ -87,6 +87,7 @@ const DeviceList = ({ devices }) => {
       listRef.current?.scrollToIndex({
         index: fuseSearchResults[0].refIndex,
         animated: true,
+        viewPosition: 0.5,
       });
   }, [searchText]);
 
