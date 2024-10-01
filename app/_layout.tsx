@@ -1,5 +1,4 @@
 import { Slot, Stack } from "expo-router";
-import { FacilityProvider } from "../context/FacilityContext";
 
 export default function RootLayout() {
   return (
