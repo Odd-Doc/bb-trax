@@ -59,7 +59,7 @@ const Device = ({ hazid, sn, model, searchStyle }) => {
 const DeviceList = ({ devices }) => {
   const [searchBarVisible, setSearchBarVisible] = useState();
   const [searchText, setSearchText] = useState("");
-  const [scrollIndex, setScrollIndex] = useState(10);
+  const [scrollIndex, setScrollIndex] = useState(0);
   const { state } = useFacilityContext();
   const listRef = useRef(null);
   const width = useSharedValue(50);
