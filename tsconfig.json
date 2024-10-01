@@ -6,19 +6,5 @@
       "@/*": ["./*"]
     }
   },
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "app/index.js",
-    "app/(tabs)/_layout.tsx",
-    "app/_layout.tsx",
-    "app/(tabs)/search/_layout.js",
-    "app/(tabs)/test/_layout.mjs",
-    "app/(tabs)/home/_layout.mjs",
-    "app/(tabs)/home/_layout.js",
-    "app/(tabs)/_layout.js",
-    "app/_layout.js"
-  ]
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
