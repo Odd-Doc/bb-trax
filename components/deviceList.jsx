@@ -83,10 +83,11 @@ const DeviceList = ({ devices }) => {
   const fuseSearchResults = fuse.search(searchText);
 
   useEffect(() => {
-    listRef.current?.scrollToIndex({
-      index: scrollIndex,
-      animated: true,
-    });
+    if (fuseSearchResults[0])
+      listRef.current?.scrollToIndex({
+        index: fuseSearchResults[0].refIndex,
+        animated: true,
+      });
   }, [searchText]);
 
   const handleDeviceSearch = () => {
