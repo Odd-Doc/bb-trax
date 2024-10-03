@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.odddoc.bbtrax"
+      "bundleIdentifier": "com.odddoc.bbtrax",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDmctAJL8NpkCAOKDJ1jcxBzhqf8syxCbI"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -26,11 +29,15 @@
     "web": {
       "bundler": "metro"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "40a4a0dd-ebc9-4d32-bafe-161b1a1b8559"
+      }
+    },
+    "owner": "odd_doc"
   }
 }

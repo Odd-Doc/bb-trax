@@ -1,4 +1,11 @@
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import React, { useEffect, useState } from "react";
 // import convertTokayData from "../../../services/convertTokayData";
@@ -37,14 +44,14 @@ const HomeIndex = () => {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={{ flex: 1 }}>
           {/* <MapIndex /> */}
-          {/* <View style={styles.linkContainer}>
+          <View style={styles.linkContainer}>
             <TouchableOpacity
               onPress={() => router.push("/home/map")}
               style={styles.button}
             >
               <Text style={styles.buttonText}>Map</Text>
             </TouchableOpacity>
-          </View> */}
+          </View>
           <View
             style={{
               flex: 1,

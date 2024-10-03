@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { StyleSheet, View } from "react-native";
 
 export default function Map({ loc }) {
@@ -16,7 +16,7 @@ export default function Map({ loc }) {
   }, [loc]);
   return (
     <View style={styles.container}>
-      <MapView region={location} style={styles.map}>
+      <MapView region={location} style={styles.map} provider={PROVIDER_GOOGLE}>
         <Marker coordinate={location} />
       </MapView>
     </View>
