@@ -20,8 +20,6 @@ export default (config) => ({
     },
   },
   android: {
-    supportsTablet: true,
-    bundleIdentifier: "com.odddoc.bbtrax",
     config: {
       googleMaps: {
         apiKey: process.env.EXPO_PUBLIC_GOOGLEMAPS_APIKEY_ANDROID,
