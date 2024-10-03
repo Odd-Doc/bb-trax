@@ -16,7 +16,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.odddoc.bbtrax",
       "config": {
-        "googleMapsApiKey": "AIzaSyDmctAJL8NpkCAOKDJ1jcxBzhqf8syxCbI"
+        "googleMapsApiKey": ""
       }
     },
     "android": {
