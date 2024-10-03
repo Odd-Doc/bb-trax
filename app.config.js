@@ -21,7 +21,7 @@ export default (config) => ({
   },
   android: {
     config: {
-      googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLEMAPS_APIKEY,
+      googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLEMAPS_APIKEY_ANDROID,
     },
     adaptiveIcon: {
       foregroundImage: "./assets/images/adaptive-icon.png",
