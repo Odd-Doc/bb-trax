@@ -1,8 +1,4 @@
-import { ExpoConfig, ConfigContext } from "@expo/config";
-import * as dotenv from "dotenv";
-
 // initialize dotenv/
-dotenv.config();
 
 export default (config) => ({
   ...config,
