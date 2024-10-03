@@ -25,5 +25,10 @@ export default (config) => ({
         apiKey: process.env.EXPO_PUBLIC_GOOGLEMAPS_APIKEY_ANDROID,
       },
     },
+    adaptiveIcon: {
+      foregroundImage: "./assets/images/adaptive-icon.png",
+      backgroundColor: "#ffffff",
+    },
+    package: "com.odddoc.bbtrax",
   },
 });
