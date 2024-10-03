@@ -23,7 +23,9 @@ export default (config) => ({
     supportsTablet: true,
     bundleIdentifier: "com.odddoc.bbtrax",
     config: {
-      googleMapsApiKey: process.env.EXPO_PUBLIC_GOOGLEMAPS_APIKEY_ANDROID,
+      googleMaps: {
+        apiKey: process.env.EXPO_PUBLIC_GOOGLEMAPS_APIKEY_ANDROID,
+      },
     },
     adaptiveIcon: {
       foregroundImage: "./assets/images/adaptive-icon.png",
