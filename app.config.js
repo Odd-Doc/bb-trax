@@ -6,6 +6,7 @@ dotenv.config();
 
 export default (config) => ({
   ...config,
+  scheme: "bbtrax",
   ios: {
     supportsTablet: true,
     bundleIdentifier: "com.odddoc.bbtrax",
