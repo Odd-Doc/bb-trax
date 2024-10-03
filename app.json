@@ -20,6 +20,9 @@
       }
     },
     "android": {
+      "config": {
+        "googleMapsApiKey": ""
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -33,11 +36,7 @@
     "experiments": {
       "typedRoutes": true
     },
-    "extra": {
-      "eas": {
-        "projectId": "40a4a0dd-ebc9-4d32-bafe-161b1a1b8559"
-      }
-    },
+
     "owner": "odd_doc"
   }
 }
