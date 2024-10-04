@@ -22,7 +22,7 @@ export default (config) => ({
   android: {
     config: {
       googleMaps: {
-        apiKey: process.env.EXPO_PUBLIC_GOOGLEMAPS_APIKEY_ANDROID,
+        apiKey: process.env.GOOGLE_MAPS_ANDROID_API,
       },
     },
     adaptiveIcon: {

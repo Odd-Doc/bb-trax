@@ -6,7 +6,12 @@ import { Stack } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const MapIndex = () => {
-  const [location, setLocation] = useState<any>({});
+  const [location, setLocation] = useState<any>({
+    latitude: 0,
+    longitude: 0,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleFindMe = () => {
@@ -16,7 +21,6 @@ const MapIndex = () => {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.Highest,
       });
@@ -27,7 +31,6 @@ const MapIndex = () => {
         longitudeDelta: 0.0421,
       });
     })();
-    // console.log(location);
   };
   return (
     <>
