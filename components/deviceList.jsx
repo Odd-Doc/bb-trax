@@ -28,6 +28,7 @@ const Device = ({ hazid, sn, model, searchStyle }) => {
       style={[
         styles.row,
         {
+          elevation: 2,
           shadowOffset: {
             width: -2,
             height: 3,
@@ -197,36 +198,6 @@ const DeviceList = ({ devices }) => {
           )}
         </View>
       </View>
-
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TouchableOpacity
-              onPress={() => setModalVisible(false)}
-              activeOpacity={0.6}
-              style={{ padding: 10 }}
-            >
-              <Ionicons name="close" size={32} color={"black"} />
-            </TouchableOpacity>
-            <View style={styles.inputConainer}>
-              <TextInput
-                style={styles.input}
-                placeholder="Enter search value"
-                value={searchText}
-                onChangeText={(text) => handleChangeText(text)}
-              />
-            </View>
-          </View>
-        </View>
-      </Modal> */}
     </>
   );
 };
@@ -239,7 +210,6 @@ const styles = StyleSheet.create({
     right: 10,
     top: 40,
     height: 50,
-    // transform: [{ translateY: 40 }, { translateX: deviceWidth - 55 }],
     zIndex: 2,
     backgroundColor: colorPalette.offwhite,
     borderRadius: 100,
@@ -248,19 +218,13 @@ const styles = StyleSheet.create({
     paddingRight: 10,
     paddingTop: 10,
     paddingBottom: 10,
-
+    elevation: 5,
     shadowOffset: {
       width: -2,
       height: 2,
     },
     shadowOpacity: 0.6,
     shadowRadius: 2.5,
-  },
-  searchButton: {},
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    marginTop: 22,
   },
   inputConainer: {
     flex: 1,
@@ -312,12 +276,6 @@ const styles = StyleSheet.create({
   },
   deviceListContainer: {
     flex: 1,
-  },
-  deviceTextContainer: {
-    backgroundColor: "#97a770",
-    marginLeft: 10,
-    flex: 1,
-    alignItems: "center",
   },
   deviceListHeaderContainer: {
     flexDirection: "row",
