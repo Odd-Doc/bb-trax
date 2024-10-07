@@ -6,7 +6,9 @@ import Facility from "../../../components/Facility";
 import { useFacilityContext } from "../../../context/FacilityContext";
 import FacilityStats from "../../../components/FacilityStats";
 import colors from "../../../styles/color-palette";
+import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import colorPalette from "../../../styles/color-palette";
 // const API_BASE = "http://localhost:3001";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
@@ -29,7 +31,12 @@ function FacilityScreen() {
       pathname: "/search/deviceListScreen",
     });
   };
-
+  const handleShowMap = () => {
+    router.push({
+      pathname: "/home/map",
+      params: {},
+    });
+  };
   return (
     <>
       <View style={styles.container}>
@@ -41,7 +48,20 @@ function FacilityScreen() {
         />
         <FacilityStats />
         <TouchableOpacity style={styles.button} onPress={handleShowDevices}>
+          <Ionicons
+            name="list-outline"
+            size={32}
+            color={colorPalette.aquamarine}
+          />
           <Text style={styles.buttonText}>Show Device List</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleShowMap}>
+          <Ionicons
+            name="map-outline"
+            size={32}
+            color={colorPalette.aquamarine}
+          />
+          <Text style={styles.buttonText}>View on Map</Text>
         </TouchableOpacity>
       </View>
     </>
@@ -62,13 +82,15 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     padding: 20,
     borderRadius: 18,
+    flexDirection: "row",
+    gap: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
   buttonText: {
     color: "white",
     fontFamily: "Roboto_400Regular",
     fontSize: 20,
-    color: "black",
-    textAlign: "center",
     color: "white",
   },
 });

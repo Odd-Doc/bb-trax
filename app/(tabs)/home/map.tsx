@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Map from "../../../components/Map";
 import * as Location from "expo-location";
 import { Stack } from "expo-router";
@@ -35,17 +35,13 @@ const MapIndex = () => {
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Map" }} />
-      <SafeAreaView>
-        <View style={styles.mapContainer}>
-          <Map loc={location} />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => handleFindMe()}
-          >
-            <Text style={styles.buttonText}>Mark Location</Text>
-          </TouchableOpacity>
-        </View>
-      </SafeAreaView>
+
+      <View style={styles.mapContainer}>
+        <Map />
+        {/* <TouchableOpacity style={styles.button} onPress={() => handleFindMe()}>
+          <Text style={styles.buttonText}>Mark Location</Text>
+        </TouchableOpacity> */}
+      </View>
     </>
   );
 };
@@ -54,8 +50,7 @@ export default MapIndex;
 
 const styles = StyleSheet.create({
   mapContainer: {
-    height: 500,
-    padding: 10,
+    height: "100%",
   },
   button: {
     backgroundColor: "green",
