@@ -9,6 +9,7 @@ import colors from "../../../styles/color-palette";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import colorPalette from "../../../styles/color-palette";
+
 // const API_BASE = "http://localhost:3001";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
@@ -20,6 +21,7 @@ function FacilityScreen() {
   const [companyDevices, setCompanyDevices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const { state, dispatch } = useFacilityContext();
+  // Search by address
 
   const params = useLocalSearchParams();
   const { id } = params;
@@ -32,10 +34,10 @@ function FacilityScreen() {
     });
   };
   const handleShowMap = () => {
-    router.push({
-      pathname: "/home/map",
-      params: {},
-    });
+    // router.push({
+    //   pathname: "/home/map",
+    //   params: {},
+    // });
   };
   return (
     <>
