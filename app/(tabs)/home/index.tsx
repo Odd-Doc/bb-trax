@@ -1,5 +1,6 @@
 import {
   Button,
+  GestureResponderEvent,
   ScrollView,
   StyleSheet,
   Text,
@@ -13,10 +14,17 @@ import { Stack, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import colorPalette from "../../../styles/color-palette";
 // import rawData from "../../../services/data.json";
+import { useCounterStore } from "../../../store/counterStore";
+import { useFacilityScreenStore } from "../../../store/facilityStore";
 
+interface Props {
+  onPress?: Function;
+}
 const HomeIndex = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const count = useCounterStore((state) => state.count);
+  // const facility = useFacilityScreenStore((state) => state.facility);
 
   return (
     <>
@@ -41,6 +49,10 @@ const HomeIndex = () => {
             >
               <Text style={styles.importButtonText}>Import Data</Text>
             </TouchableOpacity> */}
+      <View>
+        {/* <Text>{count}</Text> */}
+        {/* {facility.devices && <Text>{facility.devices[0].hazardcat}</Text>} */}
+      </View>
       <View style={styles.container}>
         <ScrollView contentContainerStyle={{ flex: 1 }}>
           {/* <MapIndex /> */}

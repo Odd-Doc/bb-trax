@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   TextInput,
+  Text,
   SafeAreaView,
   TouchableOpacity,
   FlatList,
@@ -14,18 +15,20 @@ import axios from "axios";
 import LottieLoader from "../../../components/lottieLoad";
 import { useFacilityContext } from "../../../context/FacilityContext";
 import FacilityListItem from "../../../components/FacilityListItem";
-
+import { useFacilityScreenStore } from "../../../store/facilityStore";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 // const API_BASE = "http://localhost:3001";
 
 export default function Search() {
-  const { state, dispatch } = useFacilityContext();
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [readyToPush, setReadyToPush] = useState(false);
   const router = useRouter();
-
+  const setFacility = useFacilityScreenStore((state) => state.setFacility);
+  const setDeviceStats = useFacilityScreenStore(
+    (state) => state.setDeviceStats
+  );
   useEffect(() => {
     if (searchText == "") {
       setSearchResults("");
@@ -47,39 +50,58 @@ export default function Search() {
   };
   const GetFacilityById = async (facilityId) => {
     setIsLoading(true);
-    const res = await axios
+    const response = await axios
       .get(API_BASE + "/facility/" + facilityId)
-      .then((foundData) => {
-        const deviceStats = getDeviceStatus(foundData.data.devices);
-        dispatch({
-          type: "ADD_FACILITY",
-          payload: {
-            facility: foundData.data,
-            deviceStats: deviceStats,
-          },
-        });
+      .then((data) => {
         setIsLoading(false);
+        setFacility(data.data);
+        const devices = data.data.devices;
+        setDeviceStats(getDeviceStatus(devices));
+      })
+      .then(
         router.push({
           pathname: "/search/facilityScreen",
-        });
-      })
-      .catch((err) => console.error("Error: ", err));
+        })
+      );
+
+    // setDeviceStats(deviceStats);
+    // const deviceStats = getDeviceStatus(selectedFacility.devices);
+    // setDeviceStats(deviceStats);
+
+    // const res = await axios
+    //   .get(API_BASE + "/facility/" + facilityId)
+    //   .then((foundData) => {
+    //     const deviceStats = getDeviceStatus(foundData.data.devices);
+    // dispatch({
+    //   type: "ADD_FACILITY",
+    //   payload: {
+    //     facility: foundData.data,
+    //     deviceStats: deviceStats,
+    //   },
+    // });
+
+    // })
+    // .catch((err) => console.error("Error: ", err));
   };
   const getDeviceStatus = (devices) => {
-    var currentDate = new Date().getTime();
-    var overDueCount = 0;
-    devices.map((device, i) => {
-      if (
-        new Date(device.lasttest) < new Date(device.testdue) &&
-        new Date(device.testdue).getTime() < currentDate
-      ) {
-        overDueCount += 1;
-      }
-    });
-    return {
-      overDue: overDueCount,
-      current: devices.length - overDueCount,
-    };
+    try {
+      var currentDate = new Date().getTime();
+      var overDueCount = 0;
+      devices.map((device, i) => {
+        if (
+          new Date(device.lasttest) < new Date(device.testdue) &&
+          new Date(device.testdue).getTime() < currentDate
+        ) {
+          overDueCount += 1;
+        }
+      });
+      return {
+        overDue: overDueCount,
+        current: devices.length - overDueCount,
+      };
+    } catch (err) {
+      console.error(err);
+    }
     //
   };
   return (

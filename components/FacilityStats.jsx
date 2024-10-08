@@ -5,13 +5,17 @@ import { PieChart } from "react-native-gifted-charts";
 import useFacilityComplianceGrade from "../hooks/useFacilityComplianceGrade";
 import colors from "../styles/color-palette";
 import { LinearGradient } from "expo-linear-gradient";
+import { useFacilityScreenStore } from "../store/facilityStore";
+
 const FacilityStats = () => {
   const [complianceGrade, setComplianceGrade] = useState();
-  const { state } = useFacilityContext();
+
+  const deviceStats = useFacilityScreenStore((state) => state.deviceStats);
+
   const percentGrade = useFacilityComplianceGrade({
     data: {
-      overdue: state.deviceStats.overDue,
-      current: state.deviceStats.current,
+      overdue: deviceStats.overDue,
+      current: deviceStats.current,
     },
   });
 
@@ -19,18 +23,18 @@ const FacilityStats = () => {
     if (percentGrade == 100) {
       return "All Caught Up!";
     } else {
-      return "Overdue!";
+      return "";
     }
   };
 
   const pieData = [
     {
-      value: state.deviceStats.current,
+      value: deviceStats.current,
       color: colors.aquamarine,
       gradientCenterColor: "#2dbee6",
     },
     {
-      value: state.deviceStats.overDue,
+      value: deviceStats.overDue,
       color: "#f73f6a",
       gradientCenterColor: "#FF7F97",
     },
@@ -51,7 +55,7 @@ const FacilityStats = () => {
           >
             {renderDot(colors.aquamarine)}
             <Text style={{ color: "white" }}>
-              {state.deviceStats.current} Devices Tested
+              {deviceStats.current} Devices Tested
             </Text>
           </View>
           <View
@@ -65,7 +69,7 @@ const FacilityStats = () => {
           >
             {renderDot("#f73f6a")}
             <Text style={{ color: "white" }}>
-              {state.deviceStats.overDue} Test Overdue
+              {deviceStats.overDue} Test Overdue
             </Text>
           </View>
         </View>
@@ -110,27 +114,30 @@ const FacilityStats = () => {
             innerCircleBorderColor={percentGrade == 100 ? null : "#f73f6a"}
             centerLabelComponent={() => {
               return (
-                <View
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
+                <View style={{}}>
                   <Text
                     style={{
-                      fontSize: 22,
+                      fontSize: 35,
                       color: "black",
+                      fontFamily: "Roboto_400Bold",
                       fontWeight: "bold",
                     }}
                   >
                     {percentGrade}%
                   </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: "black",
-                      textAlign: "center",
-                    }}
-                  >
-                    {getComplianceGrade()}
-                  </Text>
+                  {percentGrade == 100 ? (
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        color: "black",
+                        textAlign: "center",
+                      }}
+                    >
+                      {getComplianceGrade()}
+                    </Text>
+                  ) : (
+                    ""
+                  )}
                 </View>
               );
             }}

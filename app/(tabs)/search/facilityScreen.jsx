@@ -9,19 +9,22 @@ import colors from "../../../styles/color-palette";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import colorPalette from "../../../styles/color-palette";
+import { useFacilityScreenStore } from "../../../store/facilityStore";
 
 // const API_BASE = "http://localhost:3001";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 function FacilityScreen() {
-  const [companyName, setCompanyName] = useState();
-  const [companyAddress, setCompanyAddress] = useState("");
-  const [companyZip, setCompanyZip] = useState("");
-  const [companyTestDue, setCompanyTestDue] = useState("");
-  const [companyDevices, setCompanyDevices] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const { state, dispatch } = useFacilityContext();
-  // Search by address
+  // const [companyName, setCompanyName] = useState();
+  // const [companyAddress, setCompanyAddress] = useState("");
+  // const [companyZip, setCompanyZip] = useState("");
+  // const [companyTestDue, setCompanyTestDue] = useState("");
+  // const [companyDevices, setCompanyDevices] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const { state, dispatch } = useFacilityContext();
+  const facility = useFacilityScreenStore((state) => state.facility);
+
+  const stats = useFacilityScreenStore((state) => state.deviceStats);
 
   const params = useLocalSearchParams();
   const { id } = params;
@@ -43,9 +46,9 @@ function FacilityScreen() {
     <>
       <View style={styles.container}>
         <Facility
-          company={state.facility.company}
-          address={state.facility.address}
-          devices={state.facility.devices}
+          company={facility.company}
+          address={facility.address}
+          devices={facility.devices}
           id={id}
         />
         <FacilityStats />

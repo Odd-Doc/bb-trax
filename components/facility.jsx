@@ -24,7 +24,6 @@ import colors from "../styles/color-palette";
 function Facility({ address, company, id }) {
   const [facilityId, setFacilityId] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  const { state, dispatch } = useFacilityContext();
 
   useEffect(() => {
     setFacilityId(id);

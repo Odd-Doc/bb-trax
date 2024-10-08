@@ -11,6 +11,8 @@ import colorPalette from "../styles/color-palette";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { TouchableOpacity, Modal, TextInput, Pressable } from "react-native";
 import { useFacilityContext } from "../context/FacilityContext";
+import { useFacilityScreenStore } from "../store/facilityStore";
+
 import Fuse from "fuse.js";
 import Animated, {
   useAnimatedStyle,
@@ -61,7 +63,10 @@ const DeviceList = ({ devices }) => {
   const [searchBarVisible, setSearchBarVisible] = useState();
   const [searchText, setSearchText] = useState("");
   const [scrollIndex, setScrollIndex] = useState(0);
-  const { state } = useFacilityContext();
+  const facilityDeviceState = useFacilityScreenStore(
+    (state) => state.facility.devices
+  );
+
   const listRef = useRef(null);
   const width = useSharedValue(50);
 
@@ -80,7 +85,7 @@ const DeviceList = ({ devices }) => {
     keys: ["serialNumber", "hazid"],
   };
   //----------------------------------------------------------
-  const fuse = new Fuse(state.facility.devices, options);
+  const fuse = new Fuse(facilityDeviceState, options);
   const fuseSearchResults = fuse.search(searchText);
 
   useEffect(() => {
