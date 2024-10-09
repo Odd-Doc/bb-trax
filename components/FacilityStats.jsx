@@ -29,12 +29,12 @@ const FacilityStats = () => {
 
   const pieData = [
     {
-      value: deviceStats.current,
+      value: !deviceStats.current ? 0 : deviceStats.current,
       color: colors.aquamarine,
       gradientCenterColor: "#2dbee6",
     },
     {
-      value: deviceStats.overDue,
+      value: !deviceStats.overDue ? 0 : deviceStats.overDue,
       color: "#f73f6a",
       gradientCenterColor: "#FF7F97",
     },

@@ -12,10 +12,12 @@ import colors from "../../../styles/color-palette";
 import { useEffect, useState } from "react";
 import axios from "axios";
 // import index from "../../index.web";
-import LottieLoader from "../../../components/lottieLoad";
+import LottieLoader from "../../../components/LottieLoad";
 import { useFacilityContext } from "../../../context/FacilityContext";
 import FacilityListItem from "../../../components/FacilityListItem";
 import { useFacilityScreenStore } from "../../../store/facilityStore";
+import { useFacilityMapStore } from "../../../store/map/useFacilityMapStore";
+import * as Location from "expo-location";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 // const API_BASE = "http://localhost:3001";
 
@@ -25,10 +27,14 @@ export default function Search() {
   const [isLoading, setIsLoading] = useState(false);
   const [readyToPush, setReadyToPush] = useState(false);
   const router = useRouter();
+  const setGeocode = useFacilityScreenStore(
+    (state) => state.setGeocodeLocation
+  );
   const setFacility = useFacilityScreenStore((state) => state.setFacility);
   const setDeviceStats = useFacilityScreenStore(
     (state) => state.setDeviceStats
   );
+
   useEffect(() => {
     if (searchText == "") {
       setSearchResults("");
@@ -52,58 +58,37 @@ export default function Search() {
     setIsLoading(true);
     const response = await axios
       .get(API_BASE + "/facility/" + facilityId)
+
       .then((data) => {
         setIsLoading(false);
         setFacility(data.data);
         const devices = data.data.devices;
         setDeviceStats(getDeviceStatus(devices));
+        setGeocode(data.data.address);
       })
-      .then(
-        router.push({
-          pathname: "/search/facilityScreen",
-        })
-      );
-
-    // setDeviceStats(deviceStats);
-    // const deviceStats = getDeviceStatus(selectedFacility.devices);
-    // setDeviceStats(deviceStats);
-
-    // const res = await axios
-    //   .get(API_BASE + "/facility/" + facilityId)
-    //   .then((foundData) => {
-    //     const deviceStats = getDeviceStatus(foundData.data.devices);
-    // dispatch({
-    //   type: "ADD_FACILITY",
-    //   payload: {
-    //     facility: foundData.data,
-    //     deviceStats: deviceStats,
-    //   },
-    // });
-
-    // })
-    // .catch((err) => console.error("Error: ", err));
+      .then(console.log(useFacilityScreenStore.getState().geocode));
+    router.push({
+      pathname: "/search/facilityScreen",
+      params: {},
+    });
   };
   const getDeviceStatus = (devices) => {
-    try {
-      var currentDate = new Date().getTime();
-      var overDueCount = 0;
-      devices.map((device, i) => {
-        if (
-          new Date(device.lasttest) < new Date(device.testdue) &&
-          new Date(device.testdue).getTime() < currentDate
-        ) {
-          overDueCount += 1;
-        }
-      });
-      return {
-        overDue: overDueCount,
-        current: devices.length - overDueCount,
-      };
-    } catch (err) {
-      console.error(err);
-    }
-    //
+    var currentDate = new Date().getTime();
+    var overDueCount = 0;
+    devices.map((device, i) => {
+      if (
+        new Date(device.lasttest) < new Date(device.testdue) &&
+        new Date(device.testdue).getTime() < currentDate
+      ) {
+        overDueCount += 1;
+      }
+    });
+    return {
+      overDue: overDueCount,
+      current: devices.length - overDueCount,
+    };
   };
+
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />

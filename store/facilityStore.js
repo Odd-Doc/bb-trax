@@ -1,6 +1,8 @@
 import { create } from "zustand";
 import axios from "axios";
 import { produce } from "immer";
+import * as Location from "expo-location";
+
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 export const useFacilityScreenStore = create((set) => ({
@@ -14,6 +16,10 @@ export const useFacilityScreenStore = create((set) => ({
     phone: "",
     testdue: "",
     devices: [],
+  },
+  geocode: {
+    latitude: 0,
+    longitude: 0,
   },
   deviceStats: {
     overDue: "",
@@ -38,5 +44,17 @@ export const useFacilityScreenStore = create((set) => ({
     set(() => ({
       deviceStats: stats,
     }));
+  },
+  setGeocodeLocation: async (address) => {
+    const response = await Location.geocodeAsync(address);
+    if (response.length > 0) {
+      const { latitude, longitude } = response[0];
+      set(() => ({
+        geocode: {
+          latitude,
+          longitude,
+        },
+      }));
+    }
   },
 }));

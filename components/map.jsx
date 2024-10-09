@@ -1,26 +1,42 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { useLocalSearchParams } from "expo-router";
 import { Button, StyleSheet, TouchableOpacity, View, Text } from "react-native";
 import * as Location from "expo-location";
 import { getCurrentPos } from "../server/api/getCurrentPos";
 import { Stack } from "expo-router";
-
+import { useFacilityScreenStore } from "../store/facilityStore";
 export default function Map() {
+  const [fromHome, setFromHome] = useState();
+  const mapRef = useRef();
+  const facilityLocation = useFacilityScreenStore((state) => state.geocode);
   const [currentLocation, setCurrentLocation] = useState({
-    latitude: 0,
-    longitude: 0,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    // latitude: 0,
+    // longitude: 0,
+    // latitudeDelta: 0.0922,
+    // longitudeDelta: 0.0421,
   });
-  const geocodeLocation = () => {
-    console.log("here");
+  const params = useLocalSearchParams();
+  const setUserPos = async () => {
+    const res = await getCurrentPos();
+    console.log("re-render");
+    // setCurrentLocation(res.coords);
+    params.id == "fromHome"
+      ? mapRef.current?.animateCamera({ center: res.coords, zoom: 18 })
+      : mapRef.current?.animateCamera({
+          center: facilityLocation,
+          zoom: 18,
+        });
   };
   useEffect(() => {
-    (async () => {
-      const pos = await getCurrentPos();
-      setCurrentLocation(pos);
-    })();
-  }, [currentLocation]);
+    // (async () => {
+    //   const pos = await getCurrentPos();
+    //
+    // })();
+    setUserPos();
+    // mapRef.current?.animateCamera({ center: currentLocation, zoom: 18 });
+  }, []);
+  useEffect(() => {}, []);
   return (
     <>
       {/* <Stack.Screen
@@ -34,15 +50,36 @@ export default function Map() {
         {currentLocation && (
           <>
             <MapView
-              initialRegion={currentLocation.coords}
-              // region={location}
+              initialRegion={{
+                latitude:
+                  params.id == "fromHome"
+                    ? currentLocation.latitude
+                    : facilityLocation.latitude,
+                longitude:
+                  params.id == "fromHome"
+                    ? currentLocation.longitude
+                    : facilityLocation.longitude,
+              }}
+              region={{
+                latitude:
+                  params.id == "fromHome"
+                    ? currentLocation.latitude
+                    : facilityLocation.latitude,
+                longitude:
+                  params.id == "fromHome"
+                    ? currentLocation.longitude
+                    : facilityLocation.longitude,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
               style={styles.map}
               provider={PROVIDER_GOOGLE}
               showsUserLocation={true}
               loadingEnabled={true}
               showsMyLocationButton={true}
+              ref={mapRef}
             >
-              <Marker coordinate={currentLocation} />
+              <Marker coordinate={facilityLocation} />
             </MapView>
           </>
         )}

@@ -10,6 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import colorPalette from "../../../styles/color-palette";
 import { useFacilityScreenStore } from "../../../store/facilityStore";
+import { useFacilityMapStore } from "../../../store/map/useFacilityMapStore";
 
 // const API_BASE = "http://localhost:3001";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
@@ -23,8 +24,9 @@ function FacilityScreen() {
   // const [isLoading, setIsLoading] = useState(false);
   // const { state, dispatch } = useFacilityContext();
   const facility = useFacilityScreenStore((state) => state.facility);
+  const geocode = useFacilityScreenStore((state) => state.geocode);
 
-  const stats = useFacilityScreenStore((state) => state.deviceStats);
+  const setCoordinates = useFacilityMapStore((state) => state.setCoordinates);
 
   const params = useLocalSearchParams();
   const { id } = params;
@@ -36,12 +38,16 @@ function FacilityScreen() {
       pathname: "/search/deviceListScreen",
     });
   };
+
   const handleShowMap = () => {
-    // router.push({
-    //   pathname: "/home/map",
-    //   params: {},
-    // });
+    router.push({
+      pathname: "/search/map",
+      params: { id: "fromFacilityScreen" },
+    });
   };
+  useEffect(() => {
+    // console.log(useFacilityScreenStore.getState().geocode);
+  }, []);
   return (
     <>
       <View style={styles.container}>
@@ -52,6 +58,10 @@ function FacilityScreen() {
           id={id}
         />
         <FacilityStats />
+        {/* <View style={{ backgroundColor: "red" }}>
+          <Text>{geocode.latitude}</Text>
+          <Text>{geocode.longitude}</Text>
+        </View> */}
         <TouchableOpacity style={styles.button} onPress={handleShowDevices}>
           <Ionicons
             name="list-outline"

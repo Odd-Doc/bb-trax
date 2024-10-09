@@ -58,7 +58,12 @@ const HomeIndex = () => {
           {/* <MapIndex /> */}
           <View style={styles.linkContainer}>
             <TouchableOpacity
-              onPress={() => router.push("/home/map")}
+              onPress={() =>
+                router.push({
+                  pathname: "/home/map",
+                  params: { id: "fromHome" },
+                })
+              }
               style={styles.button}
             >
               <Text style={styles.buttonText}>Map</Text>
