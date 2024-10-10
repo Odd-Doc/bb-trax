@@ -16,13 +16,6 @@ import { useFacilityMapStore } from "../../../store/map/useFacilityMapStore";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 function FacilityScreen() {
-  // const [companyName, setCompanyName] = useState();
-  // const [companyAddress, setCompanyAddress] = useState("");
-  // const [companyZip, setCompanyZip] = useState("");
-  // const [companyTestDue, setCompanyTestDue] = useState("");
-  // const [companyDevices, setCompanyDevices] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const { state, dispatch } = useFacilityContext();
   const facility = useFacilityScreenStore((state) => state.facility);
   const geocode = useFacilityScreenStore((state) => state.geocode);
 
@@ -45,9 +38,7 @@ function FacilityScreen() {
       params: { id: "fromFacilityScreen" },
     });
   };
-  useEffect(() => {
-    // console.log(useFacilityScreenStore.getState().geocode);
-  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -58,10 +49,7 @@ function FacilityScreen() {
           id={id}
         />
         <FacilityStats />
-        {/* <View style={{ backgroundColor: "red" }}>
-          <Text>{geocode.latitude}</Text>
-          <Text>{geocode.longitude}</Text>
-        </View> */}
+
         <TouchableOpacity style={styles.button} onPress={handleShowDevices}>
           <Ionicons
             name="list-outline"
@@ -109,14 +97,5 @@ const styles = StyleSheet.create({
     color: "white",
   },
 });
-// infoContainer: {
-//   backgroundColor: "#34448B",
-// },
-// headerContainer: {
-//   backgroundColor: "#232B5D",
-//   margin: 20,
-//   borderRadius: 20,
-//   paddingTop: 30,
-//   paddingBottom: 30,
-// },
+
 export default FacilityScreen;

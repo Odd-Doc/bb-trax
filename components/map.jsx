@@ -19,8 +19,8 @@ export default function Map() {
   const params = useLocalSearchParams();
   const setUserPos = async () => {
     const res = await getCurrentPos();
-    console.log("re-render");
-    // setCurrentLocation(res.coords);
+    const modRes = res.coords;
+    setCurrentLocation(res.coords);
     params.id == "fromHome"
       ? mapRef.current?.animateCamera({ center: res.coords, zoom: 18 })
       : mapRef.current?.animateCamera({
@@ -29,14 +29,26 @@ export default function Map() {
         });
   };
   useEffect(() => {
-    // (async () => {
-    //   const pos = await getCurrentPos();
-    //
-    // })();
     setUserPos();
-    // mapRef.current?.animateCamera({ center: currentLocation, zoom: 18 });
   }, []);
-  useEffect(() => {}, []);
+  const handleFindMe = () => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+      });
+      setCurrentLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
+    })();
+  };
   return (
     <>
       {/* <Stack.Screen
@@ -50,28 +62,33 @@ export default function Map() {
         {currentLocation && (
           <>
             <MapView
-              initialRegion={{
-                latitude:
-                  params.id == "fromHome"
-                    ? currentLocation.latitude
-                    : facilityLocation.latitude,
-                longitude:
-                  params.id == "fromHome"
-                    ? currentLocation.longitude
-                    : facilityLocation.longitude,
-              }}
-              region={{
-                latitude:
-                  params.id == "fromHome"
-                    ? currentLocation.latitude
-                    : facilityLocation.latitude,
-                longitude:
-                  params.id == "fromHome"
-                    ? currentLocation.longitude
-                    : facilityLocation.longitude,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}
+              customMapStyle="54be31bc4c8bb014"
+              initialRegion={
+                {
+                  // latitude:
+                  //   params.id == "fromHome"
+                  //     ? currentLocation.latitude
+                  //     : facilityLocation.latitude,
+                  // longitude:
+                  //   params.id == "fromHome"
+                  //     ? currentLocation.longitude
+                  //     : facilityLocation.longitude,
+                }
+              }
+              region={
+                {
+                  // latitude:
+                  //   params.id == "fromHome"
+                  //     ? currentLocation.latitude
+                  //     : facilityLocation.latitude,
+                  // longitude:
+                  //   params.id == "fromHome"
+                  //     ? currentLocation.longitude
+                  //     : facilityLocation.longitude,
+                  // latitudeDelta: 0.0922,
+                  // longitudeDelta: 0.0421,
+                }
+              }
               style={styles.map}
               provider={PROVIDER_GOOGLE}
               showsUserLocation={true}
@@ -79,7 +96,15 @@ export default function Map() {
               showsMyLocationButton={true}
               ref={mapRef}
             >
+              <Marker coordinate={currentLocation} />
               <Marker coordinate={facilityLocation} />
+
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => handleFindMe()}
+              >
+                <Text style={styles.buttonText}>Mark Location</Text>
+              </TouchableOpacity>
             </MapView>
           </>
         )}
@@ -96,5 +121,24 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     // borderRadius: 12,
+  },
+  button: {
+    backgroundColor: "green",
+    width: 150,
+    height: 150,
+    alignSelf: "center",
+    marginTop: 10,
+    borderRadius: 100,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  buttonText: {
+    textAlign: "center",
+    color: "white",
+    fontSize: 15,
+    fontWeight: "700",
   },
 });

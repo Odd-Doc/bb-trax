@@ -38,9 +38,6 @@ const MapIndex = () => {
 
       <View style={styles.mapContainer}>
         <Map />
-        {/* <TouchableOpacity style={styles.button} onPress={() => handleFindMe()}>
-          <Text style={styles.buttonText}>Mark Location</Text>
-        </TouchableOpacity> */}
       </View>
     </>
   );
@@ -51,24 +48,5 @@ export default MapIndex;
 const styles = StyleSheet.create({
   mapContainer: {
     height: "100%",
-  },
-  button: {
-    backgroundColor: "green",
-    width: 150,
-    height: 150,
-    alignSelf: "center",
-    marginTop: 10,
-    borderRadius: 100,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    paddingLeft: 10,
-    paddingRight: 10,
-  },
-  buttonText: {
-    textAlign: "center",
-    color: "white",
-    fontSize: 15,
-    fontWeight: "700",
   },
 });

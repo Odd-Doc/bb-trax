@@ -6,15 +6,52 @@ POST http://localhost:3001/facility/new
 Content-Type: application/json
 
 {
-    "name":"Walter's Mart",
-    "street": "3232 Some St.",
-    "city": "Some city",
-    "state": "Some state",
-    "zip": 75050,
-    "locationId":929292
+    "locationid": "fake-location-id",
+    "company": "Testing Dummy Company",
+    "address": "1234 Address St.",
+    "city": "2307 Morgan St",
+    "state": "TX",
+    "zip": 75062,
+    "phone": "224-374-6283",
+    "devices": [
+        {
+            "hazid": 999999,
+            "hazardcat": "Irrigation",
+            "testdue": "2025-04-15T00:00:00.000Z",
+            "lasttest": "2024-03-12T00:00:00.000Z",
+            "manufacturer": "FEBCO",
+            "_model": "850",
+            "size": "2",
+            "serialNumber": "1test1",
+            "locationDescription": "Bldg#1 OUTSIDE machine shop"
+        },
+        {
+            "hazid": 888888,
+            "hazardcat": "Irrigation",
+            "testdue": "2025-04-15T00:00:00.000Z",
+            "lasttest": "2024-03-12T00:00:00.000Z",
+            "manufacturer": "WATTS",
+            "_model": "LF007M2QT",
+            "size": "1.5",
+            "serialNumber": "2test2",
+            "locationDescription": "Building 1/ SE corner inside"
+        },
+        {
+            "hazid": 9384,
+            "hazardcat": "Main Line",
+            "testdue": "2025-04-15T00:00:00.000Z",
+            "lasttest": "2024-03-12T00:00:00.000Z",
+            "manufacturer": "WATTS",
+            "_model": "709",
+            "size": "4",
+            "serialNumber": "169359",
+            "locationDescription": "Bldg 2 West Wall @ Column #23"
+        }
+    ],
+    "testdue": "2025-04-15T00:00:00.000Z"
 }
 ### find facility
-GET  http://localhost:3001/facility/66ec85756579a18247b1199e
+GET  http://localhost:3001/facility/6706c1a7c067efb7e6e695cf
 
 ###
 ### query through facilities
@@ -22,12 +59,25 @@ GET  http://localhost:3001/facility/search?query=E
 
 ###
 ### delete facility
-DELETE  http://localhost:3001/facility/delete/66e9b594fbc96d49253b4bd1
+DELETE  http://localhost:3001/facility/delete/6706c18d90cdd6acf9264d13
 
+###
+###
+
+### add imported facility
+POST http://localhost:3001/facility/newImport
+Content-Type: application/json
+
+{  
+    "name": "test",
+    "testdue": "12/15/2025"
+ 
+   
+}
 ###
 
 ### delete ALLLLLLLLLL facility
-##DELETE  http://localhost:3001/facility/delete
+DELETE  http://localhost:3001/facility/delete
 
 ###
 
@@ -69,18 +119,7 @@ Content-Type: application/json
     }
    
 }
-###
-### add imported facility
-POST http://localhost:3001/facility/newImport
-Content-Type: application/json
 
-{  
-    "name": "test",
-    "testdue": "12/15/2025"
- 
-   
-}
-###
 ### find device
 GET  http://localhost:3001/device/66e321117c7ef0c725609715
 
@@ -88,5 +127,10 @@ GET  http://localhost:3001/device/66e321117c7ef0c725609715
 
 ### delete device
 DELETE  http://localhost:3001/device/delete/66e3204097c2a2d8bbb2298b
+
+###
+
+### find and update device
+GET  http://localhost:3001/device/addCoords/6706c1a7c067efb7e6e695cf/6706c1a7c067efb7e6e695d0/2/1
 
 ###

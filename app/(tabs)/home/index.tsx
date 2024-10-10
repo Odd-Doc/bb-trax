@@ -9,11 +9,12 @@ import {
 } from "react-native";
 
 import React, { useEffect, useState } from "react";
-// import convertTokayData from "../../../services/convertTokayData";
+import convertTokayData from "../../../convertTokayData";
 import { Stack, useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
 import colorPalette from "../../../styles/color-palette";
-// import rawData from "../../../services/data.json";
+// import rawData from "../../../data.json";
+
 import { useCounterStore } from "../../../store/counterStore";
 import { useFacilityScreenStore } from "../../../store/facilityStore";
 
@@ -25,6 +26,13 @@ const HomeIndex = () => {
   const router = useRouter();
   const count = useCounterStore((state) => state.count);
   // const facility = useFacilityScreenStore((state) => state.facility);
+
+  // const handleImport = async () => {
+  //   setIsLoading(true);
+  //   await convertTokayData(rawData)
+  //     .catch((err) => console.error(err))
+  //     .then(() => setIsLoading(false));
+  // };
 
   return (
     <>
@@ -43,12 +51,9 @@ const HomeIndex = () => {
              button used to format source data into more usable state for mongo models 
             ////////////////////////////////////////////////////////////////////////////
              */}
-      {/* <TouchableOpacity
-              onPress={handleImport}
-              style={styles.importButton}
-            >
-              <Text style={styles.importButtonText}>Import Data</Text>
-            </TouchableOpacity> */}
+      {/* <TouchableOpacity onPress={handleImport} style={styles.importButton}>
+        <Text style={styles.importButtonText}>Import Data</Text>
+      </TouchableOpacity> */}
       <View>
         {/* <Text>{count}</Text> */}
         {/* {facility.devices && <Text>{facility.devices[0].hazardcat}</Text>} */}

@@ -60,12 +60,15 @@ app.get("/facilities", async (req, res) => {
 });
 app.post("/facility/new", (req, res) => {
   const newFacility = new FacilityImport({
-    name: req.body.name,
-    street: req.body.street,
+    locationid: req.body.locationId,
+    company: req.body.company,
+    address: req.body.address,
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
-    locationId: req.body.locationId,
+    phone: req.body.phone,
+    devices: req.body.devices,
+    testdue: req.body.testdue,
   });
   newFacility.save();
   res.json(newFacility);
@@ -155,6 +158,41 @@ app.delete("/device/delete/:id", async (req, res) => {
   const found = await Device.deleteOne({ _id: id });
   res.json(found);
 });
+app.get(
+  "/device/addCoords/:facilityId/:deviceId/:long/:lat",
+  async (req, res) => {
+    var deviceId = req.params.deviceId;
+    var facilityId = req.params.facilityId;
+
+    var lat = req.params.lat;
+    var long = req.params.long;
+    const device = await FacilityImport.findOne({
+      _id: facilityId,
+    })
+      .then((facility) => {
+        const device = facility.devices
+          .id(deviceId)
+          .set({ coordinates: [1, 2] }); // returns a matching subdocument
+        // device.serialNumber = req.body.serialNumber; // individual fields can be set directly
+
+        // device.location.coordinates = [long, lat];
+
+        // device.serialNumber = update;
+        return facility.save(); // saves document with subdocuments and triggers validation
+      })
+      .then((facility) => {
+        res.send({ facility });
+      });
+    // res.json(device);
+    // const facility = await FacilityImport.findById({
+    //   _id: facilityId,
+    // }).then((facility) => {
+    //   const device = facility.devices.id(deviceId);
+    //   res.json(device);
+    // }); // returns a matching subdocument;
+    // const device = facility.devices(deviceId);
+  }
+);
 
 //////////////////////////////////////////
 /// END DEVICE----------------------------
