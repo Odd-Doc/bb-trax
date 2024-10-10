@@ -23,7 +23,8 @@ Content-Type: application/json
             "_model": "850",
             "size": "2",
             "serialNumber": "1test1",
-            "locationDescription": "Bldg#1 OUTSIDE machine shop"
+            "locationDescription": "Bldg#1 OUTSIDE machine shop",
+            
         },
         {
             "hazid": 888888,
@@ -51,7 +52,7 @@ Content-Type: application/json
     "testdue": "2025-04-15T00:00:00.000Z"
 }
 ### find facility
-GET  http://localhost:3001/facility/6706c1a7c067efb7e6e695cf
+GET  http://localhost:3001/facility/67080d6d4e4c255c028cb01c
 
 ###
 ### query through facilities
@@ -59,7 +60,7 @@ GET  http://localhost:3001/facility/search?query=E
 
 ###
 ### delete facility
-DELETE  http://localhost:3001/facility/delete/6706c18d90cdd6acf9264d13
+DELETE  http://localhost:3001/facility/delete/67080d6d4e4c255c028cb01c
 
 ###
 ###
@@ -77,7 +78,7 @@ Content-Type: application/json
 ###
 
 ### delete ALLLLLLLLLL facility
-DELETE  http://localhost:3001/facility/delete
+# DELETE  http://localhost:3001/facility/delete
 
 ###
 
@@ -131,6 +132,6 @@ DELETE  http://localhost:3001/device/delete/66e3204097c2a2d8bbb2298b
 ###
 
 ### find and update device
-GET  http://localhost:3001/device/addCoords/6706c1a7c067efb7e6e695cf/6706c1a7c067efb7e6e695d0/2/1
+GET  http://localhost:3001/device/addCoords/67080a6b4e4c255c028c729a/6708071007b07663c922eb44/2/1
 
 ###

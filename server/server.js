@@ -170,9 +170,13 @@ app.get(
       _id: facilityId,
     })
       .then((facility) => {
-        const device = facility.devices
-          .id(deviceId)
-          .set({ coordinates: [1, 2] }); // returns a matching subdocument
+        const device = facility.devices.id(deviceId);
+        // console.log(device);
+        device.location = {
+          type: "Point",
+          coordinates: [40.73061, -73.935242],
+        };
+
         // device.serialNumber = req.body.serialNumber; // individual fields can be set directly
 
         // device.location.coordinates = [long, lat];
