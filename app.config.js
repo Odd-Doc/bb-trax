@@ -1,11 +1,13 @@
-import { ExpoConfig, ConfigContext } from "@expo/config";
-import * as dotenv from "dotenv";
-
 // initialize dotenv/
-dotenv.config();
 
 export default (config) => ({
   ...config,
+  updates: {
+    url: "https://u.expo.dev/40a4a0dd-ebc9-4d32-bafe-161b1a1b8559",
+  },
+  runtimeVersion: {
+    policy: "appVersion",
+  },
   scheme: "bbtrax",
   extra: {
     eas: {

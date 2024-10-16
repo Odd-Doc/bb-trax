@@ -52,11 +52,11 @@ Content-Type: application/json
     "testdue": "2025-04-15T00:00:00.000Z"
 }
 ### find facility
-GET  http://localhost:3001/facility/67080d6d4e4c255c028cb01c
+GET  http://localhost:3001/facility/67080a6b4e4c255c028c729a
 
 ###
 ### query through facilities
-GET  http://localhost:3001/facility/search?query=E
+GET  http://localhost:3001/facility/search?query=poly
 
 ###
 ### delete facility
@@ -122,7 +122,7 @@ Content-Type: application/json
 }
 
 ### find device
-GET  http://localhost:3001/device/66e321117c7ef0c725609715
+GET  http://localhost:3001/device/67080a6b4e4c255c028c729a/6708071207b07663c923e2ff
 
 ###
 

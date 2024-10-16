@@ -1,15 +1,31 @@
 import React, { useEffect, useRef, useState } from "react";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { useLocalSearchParams } from "expo-router";
-import { Button, StyleSheet, TouchableOpacity, View, Text } from "react-native";
+import mapStyles from "../styles/mapStyles";
+import ToggleSwitch from "./ToggleSwitch";
+import {
+  Button,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Text,
+  useColorScheme,
+} from "react-native";
 import * as Location from "expo-location";
 import { getCurrentPos } from "../server/api/getCurrentPos";
 import { Stack } from "expo-router";
 import { useFacilityScreenStore } from "../store/facilityStore";
+import { FacilityMarker } from "../components/CustomMarkers";
+import { Ionicons } from "@expo/vector-icons";
+import { useThemeStore } from "@/store/map/useThemeStore";
 export default function Map() {
+  const [mapDarkMode, setMapDarkMode] = useState(false);
+  const isDarkTheme = useThemeStore((state) => state.isDarkTheme);
+
   const [fromHome, setFromHome] = useState();
   const mapRef = useRef();
   const facilityLocation = useFacilityScreenStore((state) => state.geocode);
+  const [mapStyle, setMapStyle] = useState("");
   const [currentLocation, setCurrentLocation] = useState({
     // latitude: 0,
     // longitude: 0,
@@ -17,6 +33,10 @@ export default function Map() {
     // longitudeDelta: 0.0421,
   });
   const params = useLocalSearchParams();
+
+  useEffect(() => {
+    isDarkTheme == true ? setMapStyle("dark") : setMapStyle("");
+  }, [isDarkTheme]);
   const setUserPos = async () => {
     const res = await getCurrentPos();
     const modRes = res.coords;
@@ -49,6 +69,7 @@ export default function Map() {
       });
     })();
   };
+
   return (
     <>
       {/* <Stack.Screen
@@ -58,37 +79,13 @@ export default function Map() {
           ),
         }}
       /> */}
+
       <View style={[styles.container, StyleSheet.absoluteFillObject]}>
         {currentLocation && (
           <>
             <MapView
-              customMapStyle="54be31bc4c8bb014"
-              initialRegion={
-                {
-                  // latitude:
-                  //   params.id == "fromHome"
-                  //     ? currentLocation.latitude
-                  //     : facilityLocation.latitude,
-                  // longitude:
-                  //   params.id == "fromHome"
-                  //     ? currentLocation.longitude
-                  //     : facilityLocation.longitude,
-                }
-              }
-              region={
-                {
-                  // latitude:
-                  //   params.id == "fromHome"
-                  //     ? currentLocation.latitude
-                  //     : facilityLocation.latitude,
-                  // longitude:
-                  //   params.id == "fromHome"
-                  //     ? currentLocation.longitude
-                  //     : facilityLocation.longitude,
-                  // latitudeDelta: 0.0922,
-                  // longitudeDelta: 0.0421,
-                }
-              }
+              customMapStyle={mapStyles[mapStyle]}
+              region={{}}
               style={styles.map}
               provider={PROVIDER_GOOGLE}
               showsUserLocation={true}
@@ -96,15 +93,66 @@ export default function Map() {
               showsMyLocationButton={true}
               ref={mapRef}
             >
+              {/* <TouchableOpacity
+                style={[
+                  styles.switchButton,
+                  mapDarkMode && styles.activeSwitch,
+                ]}
+                onPress={toggleSwitch}
+              >
+                <Ionicons
+                  name={mapDarkMode ? "sunny-outline" : "moon-outline"}
+                  size={24}
+                  color="white"
+                />
+              </TouchableOpacity> */}
+              <View>
+                <ToggleSwitch />
+              </View>
+              {/* <View
+                style={{
+                  paddingVertical: 10,
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <DropDownPicker
+                  props={{
+                    activeOpacity: 0.9,
+                  }}
+                  open={open}
+                  value={value}
+                  items={mapStyle}
+                  setOpen={setOpen}
+                  setValue={setValue}
+                  setItems={setMapStyle}
+                  theme="DARK"
+                  mode="BADGE"
+                  badgeDotColors={[
+                    "#e76f51",
+                    "#00b4d8",
+                    "#e9c46a",
+                    "#e76f51",
+                    "#8ac926",
+                    "#00b4d8",
+                    "#e9c46a",
+                  ]}
+                  onChangeValue={(value) => {
+                    console.log(value);
+                  }}
+                />
+              </View> */}
               <Marker coordinate={currentLocation} />
-              <Marker coordinate={facilityLocation} />
-
-              <TouchableOpacity
+              <Marker coordinate={facilityLocation}>
+                <FacilityMarker />
+              </Marker>
+              {/* <TouchableOpacity
                 style={styles.button}
                 onPress={() => handleFindMe()}
               >
                 <Text style={styles.buttonText}>Mark Location</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
             </MapView>
           </>
         )}
@@ -121,6 +169,17 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     // borderRadius: 12,
+  },
+  switchButton: {
+    width: 50,
+    height: 30,
+    borderRadius: 15,
+    backgroundColor: "#ccc",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  activeSwitch: {
+    backgroundColor: "#ccc",
   },
   button: {
     backgroundColor: "green",
