@@ -65,8 +65,8 @@ export default function Search() {
         const devices = data.data.devices;
         setDeviceStats(getDeviceStatus(devices));
         setGeocode(data.data.address);
-      })
-      .then(console.log(useFacilityScreenStore.getState().geocode));
+      });
+
     router.push({
       pathname: "/search/facilityScreen",
       params: {},

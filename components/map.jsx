@@ -72,13 +72,16 @@ export default function Map() {
 
   return (
     <>
-      {/* <Stack.Screen
+      <Stack.Screen
         options={{
           headerRight: () => (
-            <Button onPress={() => geocodeLocation()} title="Geocode Test" />
+            // <Button onPress={() => geocodeLocation()} title="Geocode Test" />
+            <View>
+              <ToggleSwitch />
+            </View>
           ),
         }}
-      /> */}
+      />
 
       <View style={[styles.container, StyleSheet.absoluteFillObject]}>
         {currentLocation && (
@@ -93,66 +96,10 @@ export default function Map() {
               showsMyLocationButton={true}
               ref={mapRef}
             >
-              {/* <TouchableOpacity
-                style={[
-                  styles.switchButton,
-                  mapDarkMode && styles.activeSwitch,
-                ]}
-                onPress={toggleSwitch}
-              >
-                <Ionicons
-                  name={mapDarkMode ? "sunny-outline" : "moon-outline"}
-                  size={24}
-                  color="white"
-                />
-              </TouchableOpacity> */}
-              <View>
-                <ToggleSwitch />
-              </View>
-              {/* <View
-                style={{
-                  paddingVertical: 10,
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <DropDownPicker
-                  props={{
-                    activeOpacity: 0.9,
-                  }}
-                  open={open}
-                  value={value}
-                  items={mapStyle}
-                  setOpen={setOpen}
-                  setValue={setValue}
-                  setItems={setMapStyle}
-                  theme="DARK"
-                  mode="BADGE"
-                  badgeDotColors={[
-                    "#e76f51",
-                    "#00b4d8",
-                    "#e9c46a",
-                    "#e76f51",
-                    "#8ac926",
-                    "#00b4d8",
-                    "#e9c46a",
-                  ]}
-                  onChangeValue={(value) => {
-                    console.log(value);
-                  }}
-                />
-              </View> */}
               <Marker coordinate={currentLocation} />
               <Marker coordinate={facilityLocation}>
                 <FacilityMarker />
               </Marker>
-              {/* <TouchableOpacity
-                style={styles.button}
-                onPress={() => handleFindMe()}
-              >
-                <Text style={styles.buttonText}>Mark Location</Text>
-              </TouchableOpacity> */}
             </MapView>
           </>
         )}
