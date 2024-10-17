@@ -73,14 +73,16 @@ export default function Map() {
   return (
     <>
       <Stack.Screen
-        options={{
-          headerRight: () => (
-            // <Button onPress={() => geocodeLocation()} title="Geocode Test" />
-            <View>
-              <ToggleSwitch />
-            </View>
-          ),
-        }}
+        options={
+          {
+            // headerRight: () => (
+            //   // <Button onPress={() => geocodeLocation()} title="Geocode Test" />
+            //   <View>
+            //     <ToggleSwitch />
+            //   </View>
+            // ),
+          }
+        }
       />
 
       <View style={[styles.container, StyleSheet.absoluteFillObject]}>
